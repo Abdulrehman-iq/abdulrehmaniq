@@ -3,7 +3,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
-import { FaGlobe, FaRunning, FaShoppingBag, FaTshirt, FaTaxi, FaUsers, FaExternalLinkAlt, FaServer, FaDatabase, FaChartLine } from 'react-icons/fa'
+import { FaGlobe, FaRunning, FaShoppingBag, FaTshirt, FaTaxi, FaUsers, FaExternalLinkAlt, FaServer, FaDatabase, FaChartLine, FaHome, FaUtensils, FaBookOpen } from 'react-icons/fa'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
@@ -138,23 +138,44 @@ const Experience = () => {
       status: 'in-progress'
     },
     {
-        id: 'sportsEvent',
-        title: 'Sports Event Management',
-        description: 'A platform for sports event management where players can register, view event details, and check match schedules. Built with PHP and JavaScript, and integrated with a database.',
-        tags: ['PHP', 'JavaScript', 'MySQL' ],
-        imageSrc: '/images/Sportsevent.png',  // You can replace the path with your actual image path
-        icon: FaRunning,  // You can choose an appropriate icon for your project
-        color: themeColors.green,  // Choose an appropriate color
-        status: 'completed'
-      }
-      
+      id: 'sportsEvent',
+      title: 'Sports Event Management',
+      description: 'A platform for sports event management where players can register, view event details, and check match schedules. Built with PHP and JavaScript, and integrated with a database.',
+      tags: ['PHP', 'JavaScript', 'MySQL' ],
+      imageSrc: '/images/Sportsevent.png',
+      icon: FaRunning,
+      color: themeColors.green,
+      status: 'completed'
+    },
+    {
+      id: 'landmark',
+      title: 'Landmark Property',
+      description: 'A modern real estate website showcasing luxury properties with elegant design and smooth user experience. Features property listings, detailed views, and responsive design for all devices.',
+      tags: ['React', 'TypeScript', 'Tailwind CSS'],
+      imageSrc: '/images/landmark.png',
+      icon: FaHome,
+      link: 'https://landmarkproperty.vercel.app/',
+      color: themeColors.cyan,
+      status: 'completed'
+    },
+    {
+      id: 'perthjunction',
+      title: 'Perth Junction Restaurant',
+      description: 'A sophisticated restaurant website featuring menu displays, reservation system, and contact functionality. Built with modern React architecture and includes email integration for customer inquiries.',
+      tags: ['React', 'TypeScript', 'Tailwind CSS', 'Nodemailer'],
+      imageSrc: '/images/perthjunction.png',
+      icon: FaUtensils,
+      link: 'https://perth-junction-restaurant.vercel.app/',
+      color: themeColors.green,
+      status: 'completed'
+    }
   ]
   
   const mobileProjects: Project[] = [
     {
       id: 'rideby',
       title: 'Ride By',
-description:'A ride-hailing app where users can find and book rides, view trip history, and enjoy real-time tracking—all designed for a seamless experience.',
+      description:'A ride-hailing app where users can find and book rides, view trip history, and enjoy real-time tracking—all designed for a seamless experience.',
       tags: ['React Native', 'Firebase', 'Google Maps API'],
       imageSrc: '/images/Rideby.png',
       icon: FaTaxi,
@@ -171,6 +192,16 @@ description:'A ride-hailing app where users can find and book rides, view trip h
       icon: FaUsers,
       link: '#',
       color: themeColors.blue,
+      status: 'completed'
+    },
+    {
+      id: 'quranly',
+      title: 'Holy Quran App - Quranly',
+      description: 'An interactive Quran application where users can guess the meaning of Quranic words, read verses, and listen to recitations. Features gamified learning, audio playback, and progress tracking for an engaging spiritual experience.',
+      tags: ['Flutter', 'Dart', 'Riverpod', 'SharedPreferences', 'RESTful API', 'Node.js', 'MongoDB'],
+      imageSrc: '/images/quranly.png',
+      icon: FaBookOpen,
+      color: themeColors.cyan,
       status: 'completed'
     }
   ]
@@ -747,7 +778,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
               </div>
               
               {/* Special mobile device mockup layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
                 {mobileProjects.map((project, index) => (
                   <motion.div
                     key={project.id}

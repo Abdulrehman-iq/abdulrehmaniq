@@ -5,6 +5,8 @@ import { useEffect, useState, useRef, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import SplitType from 'split-type'
+import { FaDatabase, FaServer, FaStream, FaChartLine, FaCog, FaCloud } from 'react-icons/fa'
+import { SiApacheairflow, SiApachespark, SiPython, SiDocker } from 'react-icons/si'
 
 // Main Splash Screen Component
 const SplashScreen = ({ children }: { children: ReactNode }) => {
@@ -42,30 +44,27 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
       if (splitLogo.chars) {
         logoCharsRef.current = Array.from(splitLogo.chars)
         
-        // Add hover effect to each character
+        // Add hover effect to each character with data engineering theme colors
         logoCharsRef.current.forEach(char => {
           char.style.display = 'inline-block'
           char.style.transition = 'transform 0.2s ease-out'
           
           char.addEventListener('mouseenter', () => {
-            // Random animation effect from several options
-            const effectNum = Math.floor(Math.random() * 5)
+            // Data engineering themed hover effects
+            const effectNum = Math.floor(Math.random() * 4)
             
             switch(effectNum) {
               case 0:
-                gsap.to(char, { y: -15, scale: 1.2, color: '#4ade80', duration: 0.3 }) 
+                gsap.to(char, { y: -15, scale: 1.2, color: '#00c9ff', duration: 0.3 }) 
                 break
               case 1:
-                gsap.to(char, { x: 5, scale: 1.3, color: '#60a5fa', duration: 0.3 }) 
+                gsap.to(char, { x: 5, scale: 1.3, color: '#92fe9d', duration: 0.3 }) 
                 break
               case 2:
-                gsap.to(char, { rotate: 15, scale: 1.1, color: '#22d3ee', duration: 0.3 }) 
+                gsap.to(char, { rotate: 15, scale: 1.1, color: '#60a5fa', duration: 0.3 }) 
                 break
               case 3:
-                gsap.to(char, { skewX: 20, color: '#f472b6', duration: 0.3 }) 
-                break
-              case 4:
-                gsap.to(char, { scale: 1.4, color: '#c084fc', duration: 0.3 }) 
+                gsap.to(char, { scale: 1.4, color: '#fbbf24', duration: 0.3 }) 
                 break
             }
           })
@@ -201,74 +200,151 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
             }}
             transition={{ duration: 0.3 }}
           >
-            {/* Subtle, cleaner gradient overlay */}
+            {/* Data engineering themed gradient overlay */}
             <div 
               className="absolute inset-0"
               style={{ 
-                background: 'linear-gradient(135deg, rgba(0, 201, 255, 0.03) 0%, rgba(146, 254, 157, 0.02) 50%, rgba(96, 165, 250, 0.03) 100%)',
+                background: 'linear-gradient(135deg, rgba(0, 201, 255, 0.05) 0%, rgba(146, 254, 157, 0.03) 50%, rgba(96, 165, 250, 0.05) 100%)',
                 backdropFilter: 'blur(2px)'
               }}
             />
             
-            {/* Cleaner, more refined gradient elements */}
+            {/* Floating Data Engineering Icons */}
+            {[
+              { Icon: FaDatabase, position: { top: '15%', left: '10%' }, delay: 1.2, color: '#00c9ff' },
+              { Icon: SiApacheairflow, position: { top: '20%', right: '15%' }, delay: 1.4, color: '#92fe9d' },
+              { Icon: FaServer, position: { bottom: '60%', left: '8%' }, delay: 1.6, color: '#60a5fa' },
+              { Icon: SiApachespark, position: { bottom: '25%', right: '12%' }, delay: 1.8, color: '#fbbf24' },
+              { Icon: SiPython, position: { top: '50%', left: '85%' }, delay: 2.0, color: '#00c9ff' },
+              { Icon: FaStream, position: { bottom: '50%', left: '15%' }, delay: 2.2, color: '#92fe9d' },
+              { Icon: FaCloud, position: { top: '70%', right: '10%' }, delay: 2.4, color: '#60a5fa' },
+              { Icon: SiDocker, position: { bottom: '80%', right: '20%' }, delay: 2.6, color: '#fbbf24' }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                animate={{ 
+                  opacity: [0, 0.15, 0.1], 
+                  scale: [0, 1.2, 1], 
+                  rotate: [-180, 0, 360]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  delay: item.delay,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  repeatDelay: 3
+                }}
+                className="absolute text-4xl md:text-5xl pointer-events-none"
+                style={{
+                  ...item.position,
+                  color: item.color,
+                  filter: 'blur(0.5px)'
+                }}
+              >
+                <motion.div
+                  animate={{
+                    y: [0, -10, 0],
+                    rotate: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 4 + index,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: index * 0.3,
+                  }}
+                >
+                  <item.Icon />
+                </motion.div>
+              </motion.div>
+            ))}
+            
+            {/* Data pipeline visualization */}
             <div className="absolute inset-0 z-0 overflow-hidden">
-              {/* Top gradient accent */}
-              <div 
-                className="absolute top-0 left-0 w-full h-1"
-                style={{
-                  background: 'linear-gradient(90deg, rgba(0, 201, 255, 0.3), rgba(146, 254, 157, 0.3), rgba(96, 165, 250, 0.3))'
+              {/* Pipeline flow lines */}
+              <motion.div
+                className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"
+                initial={{ width: '0%', left: '0%' }}
+                animate={{ 
+                  width: ['0%', '100%', '0%'], 
+                  left: ['0%', '0%', '100%']
                 }}
-              ></div>
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  delay: 2.5,
+                  ease: "easeInOut"
+                }}
+                style={{ transform: 'translateY(-50%)' }}
+              />
               
-              {/* Refined accent 1 - Cyan */}
-              <div 
-                className="absolute top-[10%] left-[10%] w-32 h-32 md:w-64 md:h-64"
-                style={{
-                  background: 'radial-gradient(circle, rgba(0, 201, 255, 0.07) 0%, rgba(0, 201, 255, 0) 70%)',
-                  opacity: 0.4
+              <motion.div
+                className="absolute top-1/3 left-0 h-0.5 bg-gradient-to-r from-transparent via-green-400/20 to-transparent"
+                initial={{ width: '0%', left: '0%' }}
+                animate={{ 
+                  width: ['0%', '80%', '0%'], 
+                  left: ['0%', '20%', '100%']
                 }}
-              ></div>
+                transition={{ 
+                  duration: 3.5, 
+                  repeat: Infinity, 
+                  delay: 3,
+                  ease: "easeInOut"
+                }}
+                style={{ transform: 'translateY(-50%)' }}
+              />
               
-              {/* Refined accent 2 - Green */}
-              <div 
-                className="absolute bottom-[15%] right-[15%] w-48 h-48 md:w-80 md:h-80"
-                style={{
-                  background: 'radial-gradient(circle, rgba(146, 254, 157, 0.07) 0%, rgba(146, 254, 157, 0) 70%)',
-                  opacity: 0.4
+              <motion.div
+                className="absolute top-2/3 left-0 h-0.5 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent"
+                initial={{ width: '0%', left: '0%' }}
+                animate={{ 
+                  width: ['0%', '90%', '0%'], 
+                  left: ['0%', '10%', '100%']
                 }}
-              ></div>
-              
-              {/* Refined accent 3 - Blue */}
-              <div
-                className="absolute top-[60%] left-[20%] w-24 h-24 md:w-40 md:h-40"
-                style={{
-                  background: 'radial-gradient(circle, rgba(96, 165, 250, 0.07) 0%, rgba(96, 165, 250, 0) 70%)',
-                  opacity: 0.3
+                transition={{ 
+                  duration: 4.5, 
+                  repeat: Infinity, 
+                  delay: 2.8,
+                  ease: "easeInOut"
                 }}
-              ></div>
+                style={{ transform: 'translateY(-50%)' }}
+              />
             </div>
             
-            {/* Main content container with subtle gradient border */}
+            {/* Main content container */}
             <div className="max-w-5xl w-full relative z-10 py-6 md:py-10">
               <div className="splash-content flex flex-col items-center justify-center px-4 md:px-6">
                 {/* Main Content */}
                 <div className="relative z-20 text-center">
-                  {/* Logo - ARIQ with no frame, just text */}
+                  {/* Logo - Abdul Rehman with data engineering focus */}
                   <div 
                     ref={logoRef} 
                     className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold font-[Outfit] tracking-tighter mb-4 md:mb-6 text-[#fffce1] perspective-1000"
                   >
-                    ARIQ Systems
+                    Abdul Rehman Iqbal
                     <span className="text-[#00c9ff]">.</span>
                   </div>
                   
-                  {/* Slogan with clean animated underline */}
+                  {/* Data Engineering title */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 2.0 }}
+                    className="text-lg sm:text-xl md:text-2xl font-semibold text-transparent bg-clip-text mb-3"
+                    style={{
+                      backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d, #60a5fa)'
+                    }}
+                  >
+                    Data Engineer
+                  </motion.div>
+                  
+                  {/* Slogan with data engineering focus */}
                   <div className="relative">
                     <div 
                       ref={sloganRef} 
                       className="text-base sm:text-lg md:text-xl font-medium text-[#fffce1]/80 mb-8 md:mb-12 font-dm-sans"
                     >
-                      Next-Gen Solutions for a Fast-Changing World
+                      Transforming Raw Data Into Actionable Insights
                     </div>
                     <motion.div 
                       className="h-[2px] w-0 absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2"
@@ -285,15 +361,24 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
                     />
                   </div>
                   
-                  {/* Animated dots to show loading */}
-                  <div className="mt-6 md:mt-8 flex justify-center space-x-2">
+                  {/* Data processing indicator */}
+                  <motion.div 
+                    className="mt-6 md:mt-8 flex justify-center items-center space-x-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 3 }}
+                  >
+                    <span className="text-xs md:text-sm text-[#fffce1]/60 font-mono">
+                      Processing data pipeline
+                    </span>
                     {[...Array(3)].map((_, i) => (
                       <motion.div
                         key={i}
-                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#fffce1]"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full"
+                        style={{ backgroundColor: i === 0 ? '#00c9ff' : i === 1 ? '#92fe9d' : '#60a5fa' }}
                         animate={{ 
                           opacity: [0.3, 1, 0.3],
-                          scale: [1, 1.2, 1]
+                          scale: [1, 1.3, 1]
                         }}
                         transition={{ 
                           duration: 1.5, 
@@ -302,13 +387,21 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
                         }}
                       />
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
             
-            {/* Refined loading indicator with smooth gradient - exactly 6 seconds */}
-            <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-0 right-0 flex justify-center">
+            {/* Progress bar with data flow visualization */}
+            <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-0 right-0 flex flex-col items-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2 }}
+                className="text-xs text-[#fffce1]/50 mb-2 font-mono"
+              >
+                Initializing data workflows...
+              </motion.div>
               <div className="relative w-32 sm:w-40 md:w-48 h-0.5 md:h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
                 <motion.div 
                   className="absolute top-0 left-0 h-full rounded-full"
@@ -319,6 +412,17 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 6, ease: "linear" }}
+                />
+                {/* Data packets moving through the pipeline */}
+                <motion.div
+                  className="absolute top-0 left-0 w-2 h-full bg-white/30 rounded-full"
+                  animate={{ x: [0, 180] }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity, 
+                    delay: 2,
+                    ease: "linear"
+                  }}
                 />
               </div>
             </div>
