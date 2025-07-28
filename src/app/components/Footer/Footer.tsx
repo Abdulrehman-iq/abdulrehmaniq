@@ -127,15 +127,8 @@ export default function Footer() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-gray-400 text-sm flex items-center gap-2"
           >
-            © {new Date().getFullYear()} Abdul Rehman. Made with 
-            <motion.span
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-              className="text-red-400"
-            >
-              <FaHeart />
-            </motion.span>
-            using Next.js & TypeScript
+            © {new Date().getFullYear()} Abdulrehman Iqbal. 
+           
           </motion.p>
 
           {/* Back to Top Button */}
