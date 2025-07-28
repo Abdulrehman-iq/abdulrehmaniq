@@ -6,7 +6,7 @@ import Introduction from './components/Introduction/Introduction'
 import { useTheme } from './components/context/ThemeContext'
 import Experience from './components/Projects/Experience'
 import WhyChooseAriqSystems from './components/WhyChooseAriqSystems/WhyChooseAriqSystems'
-import { Footer } from './components/Footer/Footer'
+import Footer from './components/Footer/Footer'
 
 export default function Home() {
   const { styles } = useTheme();

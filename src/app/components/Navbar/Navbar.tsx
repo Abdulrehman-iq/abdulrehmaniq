@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { FaGithub, FaLinkedin, FaWhatsapp, FaDatabase } from 'react-icons/fa';
-import { SiPython, SiApachespark, SiApacheairflow, SiDocker,  } from 'react-icons/si';
+import { SiPython, SiApachespark, SiApacheairflow, SiDocker} from 'react-icons/si';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import SplitType from 'split-type';
@@ -42,7 +42,7 @@ export default function Navbar() {
       setIsAnimated(true);
 
       // Add hover effect to each character with data engineering theme colors
-      logoCharsRef.current.forEach((char, index) => {
+      logoCharsRef.current.forEach((char) => {
         char.style.display = 'inline-block';
         char.style.transition = 'transform 0.2s ease-out';
         char.style.cursor = 'pointer';
@@ -139,7 +139,7 @@ export default function Navbar() {
                 ref={logoRef} 
                 className="font-outfit font-extrabold text-xl md:text-2xl tracking-tight text-[#fffce1] perspective-1000 relative"
               >
-                Abdul Rehman Iqbal
+                Abdulrehman Iqbal
                 <span className="text-cyan-400 animate-pulse">.</span>
               </div>
             </Link>
