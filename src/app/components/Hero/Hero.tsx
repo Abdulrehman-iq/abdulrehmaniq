@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, MouseEvent, useRef } from "react"
-import { FaChevronDown, FaLayerGroup, FaDatabase, FaPlug, FaAws, FaStream, FaClock } from 'react-icons/fa'
+import { FaChevronDown,FaAws,FaStream, FaClock } from 'react-icons/fa'
 import { HiOutlineSparkles } from 'react-icons/hi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SiApacheairflow, SiApachespark, SiGooglecloud, SiPython } from 'react-icons/si'

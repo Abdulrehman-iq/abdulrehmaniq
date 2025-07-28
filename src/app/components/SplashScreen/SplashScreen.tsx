@@ -5,7 +5,7 @@ import { useEffect, useState, useRef, ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import SplitType from 'split-type'
-import { FaDatabase, FaServer, FaStream, FaChartLine, FaCog, FaCloud } from 'react-icons/fa'
+import { FaDatabase, FaServer, FaStream, FaCloud } from 'react-icons/fa'
 import { SiApacheairflow, SiApachespark, SiPython, SiDocker } from 'react-icons/si'
 
 // Main Splash Screen Component
