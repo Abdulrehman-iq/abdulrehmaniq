@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, MouseEvent, useRef } from "react"
-import { FaChevronDown, FaLayerGroup, FaMobile, FaDatabase, FaPlug } from 'react-icons/fa'
+import { FaChevronDown, FaLayerGroup, FaDatabase, FaPlug, FaAws, FaStream, FaClock } from 'react-icons/fa'
 import { HiOutlineSparkles } from 'react-icons/hi'
 import { motion, AnimatePresence } from 'framer-motion'
+import { SiApacheairflow, SiApachespark, SiGooglecloud, SiPython } from 'react-icons/si'
+import { MdCloud, MdAnalytics } from 'react-icons/md'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import SplitType from 'split-type'
@@ -16,7 +18,7 @@ if (typeof window !== 'undefined') {
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const impactWords = ["Innovation", "Simplicty", "Impact", "Excellence"];
+  const impactWords = ["Real-time Pipelines", "Cloud Architecture", "Data Automation", "Actionable Insights"];
   
   // Refs for GSAP animations
   const sectionRef = useRef<HTMLElement>(null);
@@ -227,6 +229,39 @@ export default function Hero() {
             filter: 'blur(70px)'
           }}
         ></motion.div>
+
+        {/* Floating Data Engineering Icons */}
+        {[
+          { Icon: SiApacheairflow, position: { top: '15%', left: '10%' }, delay: 1.2 },
+          { Icon: SiApachespark, position: { top: '70%', right: '15%' }, delay: 1.4 },
+          { Icon: FaAws, position: { top: '40%', left: '85%' }, delay: 1.6 },
+          { Icon: SiGooglecloud, position: { bottom: '60%', left: '5%' }, delay: 1.8 },
+          { Icon: SiPython, position: { bottom: '30%', right: '10%' }, delay: 2.2 }
+        ].map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.1, scale: 1 }}
+            transition={{ duration: 1, delay: item.delay }}
+            className="absolute text-6xl text-white/10 pointer-events-none"
+            style={item.position}
+          >
+            <motion.div
+              animate={{
+                y: [0, -20, 0],
+                rotate: [0, 10, 0],
+              }}
+              transition={{
+                duration: 6 + index,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: index * 0.5,
+              }}
+            >
+              <item.Icon />
+            </motion.div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Main content with enhanced layout */}
@@ -246,7 +281,7 @@ export default function Hero() {
                   className="text-transparent bg-clip-text"
                   style={{ backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d)' }}
                 />
-                <span className="text-[#fffce1]">Crafting Web & Mobile Apps That Drive Results</span>
+                <span className="text-[#fffce1]">Building Scalable Pipelines & Cloud Architectures</span>
               </span>
             </motion.div>
             
@@ -260,12 +295,12 @@ export default function Hero() {
                 transition={{ duration: 0.1 }}
                 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight text-[#fffce1] font-outfit tracking-tight"
               >
-                Transforming Ideas Into  {' '}
+                Transforming Data Into  {' '}
                 <span 
                   className="text-[#fffcel] bg-clip-text"
                   style={{ backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d)' }}
                 >
-                  Digital Reality
+                  Insights
                 </span>
               </motion.h1>
             </div>
@@ -306,7 +341,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.6 }}
               className="text-xl leading-relaxed max-w-2xl mx-auto mb-10 text-[#fffce1] font-dm-sans"
             >
-              Cutting-edge solutions for the modern digital world. I craft scalable web and mobile applications that bring your vision to life—efficiently, beautifully, and reliably.
+              I design and automate robust data workflows that turn raw data into business-ready insights. From real-time processing and batch pipelines to cloud-native ETL and analytics dashboards—my work powers data-driven decisions at scale.
             </motion.p>
             
             {/* Enhanced CTA button with downward orientation */}
@@ -334,7 +369,7 @@ export default function Hero() {
                 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Explore My Portfolio
+                Explore Data Projects
               </motion.a>
               
               {/* Animated down chevron */}
@@ -362,21 +397,21 @@ export default function Hero() {
               className="mt-20"
             >
               <p className="text-sm uppercase tracking-wider font-medium mb-8 text-[#bbbbbb] font-outfit">
-                DIGITAL SOLUTIONS FOR
+                DATA ENGINEERING SOLUTIONS FOR
               </p>
-              <div className="flex flex-wrap justify-center gap-5 sm:gap-6 md:gap-8">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 max-w-5xl mx-auto">
                 {[
-                  { icon: FaLayerGroup, text: "Full Stack Web Development" },
-                  { icon: FaMobile, text: "Mobile App Development" },
-                  { icon: FaDatabase, text: "Database Management" }, 
-                  { icon: FaPlug, text: "Custom APIs & Integration" },
+                  { icon: FaStream, text: "End-to-End Data Pipelines" },
+                  { icon: MdCloud, text: "Cloud-Native Architecture" },
+                  { icon: FaClock, text: "Real-Time & Batch Processing" }, 
+                  { icon: MdAnalytics, text: "Analytics-Ready Data Modeling" },
                 ].map((item, index) => (
                   <motion.div 
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1 + (index * 0.2), duration: 0.5 }}
-                    className="specialty-item flex flex-col items-center group text-center w-[160px] sm:w-[180px] md:w-[200px]"
+                    className="specialty-item flex flex-col items-center group text-center"
                   >
                     <div 
                       className="p-6 rounded-2xl mb-4 group-hover:scale-110 transition-all duration-300 bg-white/5 backdrop-blur-md"
@@ -391,7 +426,7 @@ export default function Hero() {
                         }}
                       />
                     </div>
-                    <span className="font-medium text-sm sm:text-base md:text-lg text-[#fffce1] font-dm-sans">
+                    <span className="font-medium text-sm sm:text-base text-[#fffce1] font-dm-sans leading-tight">
                       {item.text}
                     </span>
                   </motion.div>
