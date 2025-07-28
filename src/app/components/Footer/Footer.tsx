@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaWhatsapp, FaArrowUp, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaWhatsapp, FaArrowUp } from 'react-icons/fa';
 
 export default function Footer() {
   const scrollToTop = () => {

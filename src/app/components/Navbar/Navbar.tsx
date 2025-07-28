@@ -10,7 +10,6 @@ import SplitType from 'split-type';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
   const logoCharsRef = useRef<HTMLSpanElement[]>([]);
   const [isAnimated, setIsAnimated] = useState(false);
