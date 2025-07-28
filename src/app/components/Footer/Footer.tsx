@@ -91,7 +91,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-2"
             >
-              {['About', 'Experience', 'Projects', 'Skills', 'Contact'].map((link, index) => (
+              {['About', 'Experience', 'Projects', 'Skills', 'Contact'].map((link) => (
                 <motion.a
                   key={link}
                   href={`#${link.toLowerCase()}`}
@@ -121,7 +121,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex space-x-4"
             >
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social, socialIndex) => (
                 <motion.a
                   key={social.name}
                   href={social.url}
@@ -135,7 +135,7 @@ export default function Footer() {
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + socialIndex * 0.1 }}
                 >
                   <social.icon 
                     className="text-lg transition-colors duration-300 group-hover:drop-shadow-lg" 
@@ -217,22 +217,22 @@ export default function Footer() {
       
       {/* Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(3)].map((_, i) => (
+        {[...Array(3)].map((_, particleIndex) => (
           <motion.div
-            key={i}
+            key={particleIndex}
             className="absolute w-2 h-2 bg-cyan-400/20 rounded-full"
             style={{
-              left: `${20 + i * 30}%`,
-              top: `${30 + i * 20}%`,
+              left: `${20 + particleIndex * 30}%`,
+              top: `${30 + particleIndex * 20}%`,
             }}
             animate={{
               y: [0, -20, 0],
               opacity: [0.2, 0.6, 0.2],
             }}
             transition={{
-              duration: 3 + i,
+              duration: 3 + particleIndex,
               repeat: Infinity,
-              delay: i * 0.5,
+              delay: particleIndex * 0.5,
             }}
           />
         ))}
