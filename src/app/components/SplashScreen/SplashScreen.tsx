@@ -321,7 +321,7 @@ const SplashScreen = ({ children }: { children: ReactNode }) => {
                     ref={logoRef} 
                     className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold font-[Outfit] tracking-tighter mb-4 md:mb-6 text-[#fffce1] perspective-1000"
                   >
-                    Abdul Rehman Iqbal
+                    Abdulrehman Iqbal
                     <span className="text-[#00c9ff]">.</span>
                   </div>
                   
