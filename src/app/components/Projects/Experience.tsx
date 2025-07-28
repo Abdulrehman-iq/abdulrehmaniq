@@ -3,7 +3,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
-import { FaGlobe, FaRunning, FaShoppingBag, FaTshirt, FaTaxi, FaUsers, FaExternalLinkAlt } from 'react-icons/fa'
+import { FaGlobe, FaRunning, FaShoppingBag, FaTshirt, FaTaxi, FaUsers, FaExternalLinkAlt, FaServer, FaDatabase, FaChartLine } from 'react-icons/fa'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
@@ -19,7 +19,7 @@ interface Project {
   title: string
   description: string
   tags: string[]
-  imageSrc: string
+  imageSrc?: string
   icon: React.ElementType
   link?: string
   color: string
@@ -58,6 +58,46 @@ const Experience = () => {
     green: "#92fe9d",
     blue: "#60a5fa"
   }
+  
+  // Data Engineering Projects - NEW ARRAY (appears first)
+  const dataEngineeringProjects: Project[] = [
+    {
+      id: 'logisticsPipeline',
+      title: 'Logistics Data Engineering Pipeline on AWS',
+      description: 'Designed a scalable logistics pipeline using AWS and Spark. Airflow orchestrated ingestion & medallion architecture (Bronze, Silver, Gold). DBT modeled data and Redshift served analytics. CI/CD ensured reliability.',
+      tags: ['AWS S3', 'Spark', 'Airflow', 'DBT', 'Redshift', 'Python', 'Pandas', 'IAM', 'GitHub Actions'],
+      icon: FaServer,
+      color: themeColors.cyan,
+      status: 'completed'
+    },
+    {
+      id: 'ecommerceAnalytics',
+      title: 'E-Commerce Analytics Pipeline',
+      description: 'Built a batch + real-time analytics system. Kafka ingested clickstream data, Flink processed it in real-time. Spark handled batch ETL. Great Expectations validated data; monitoring via Prometheus & Grafana.',
+      tags: ['Flink', 'Spark', 'Kafka', 'Airflow', 'PostgreSQL', 'Docker', 'Prometheus', 'Grafana', 'Python'],
+      icon: FaDatabase,
+      color: themeColors.green,
+      status: 'completed'
+    },
+    {
+      id: 'rideflowPipeline',
+      title: 'RideFlow – End-to-End Data Engineering Pipeline',
+      description: 'Implemented a complete data pipeline for ride-hailing analytics. Kafka streamed data, Airflow scheduled Spark jobs for transformation, and PostgreSQL served insights. Scalable, reliable, and production-ready.',
+      tags: ['Apache Spark', 'Kafka', 'Airflow', 'PostgreSQL', 'HDFS'],
+      icon: FaGlobe,
+      color: themeColors.blue,
+      status: 'completed'
+    },
+    {
+      id: 'covidAnalytics',
+      title: 'COVID-19 Analytics Pipeline',
+      description: 'Implemented a cloud-native analytics pipeline to process COVID-19 case data. Airflow managed workflows from ingestion to transformation using PySpark. dbt was used for data modeling and Redshift served as the final data warehouse. Real-time monitoring was done with Grafana, and Power BI visualized trends and projections.',
+      tags: ['Kaggle API', 'Apache Airflow', 'AWS S3', 'PySpark on EMR', 'Apache Kafka', 'Redshift', 'DBT', 'GitHub Actions', 'Power BI', 'Grafana', 'Great Expectations'],
+      icon: FaChartLine,
+      color: themeColors.green,
+      status: 'completed'
+    }
+  ]
   
   // Project data with detailed information
   const professionalProjects: Project[] = [
@@ -293,12 +333,12 @@ description:'A ride-hailing app where users can find and book rides, view trip h
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg text-center max-w-3xl mx-auto text-[#fffce1]/90 mb-12"
         >
-          From professional client work to personal passion projects, here&apos;s a selection of applications I&apos;ve built across web and mobile platforms.
+          From data engineering pipelines to full-stack applications, here&apos;s a selection of projects I&apos;ve built across different domains and platforms.
         </motion.p>
         
-        {/* Category tabs with active indicator */}
+        {/* Category tabs with active indicator - UPDATED ORDER */}
         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
-          {['Professional Work', 'Personal Web Projects', 'Mobile App Projects'].map((tab, index) => (
+          {['Data Engineering Projects', 'Professional Work', 'Personal Web Projects', 'Mobile App Projects'].map((tab, index) => (
             <motion.button
               key={tab}
               onClick={() => setActiveTab(index)}
@@ -341,9 +381,112 @@ description:'A ride-hailing app where users can find and book rides, view trip h
       
       {/* Content sections */}
       <div className="container mx-auto px-6 relative z-10">
-        {/* Professional Work Section */}
+        {/* Data Engineering Projects Section - NEW FIRST TAB */}
         <AnimatePresence mode="wait">
           {activeTab === 0 && (
+            <motion.div
+              key="dataengineering"
+              variants={fadeIn}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="mb-24"
+            >
+              <div className="section-header mb-12">
+                <h3 className="text-3xl font-bold mb-4 text-[#fffce1]">Data Engineering Projects</h3>
+                <div className="h-1 w-20 rounded-full" style={{ background: `linear-gradient(90deg, ${themeColors.cyan}, ${themeColors.green})` }}></div>
+                <p className="mt-4 text-[#fffce1]/80 max-w-3xl">
+                  Data pipelines, real-time processing, and scalable analytics platforms powering decision-making.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                {dataEngineeringProjects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    className="project-card rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 h-full"
+                    variants={projectCardVariants}
+                    initial="initial"
+                    animate="animate"
+                    whileHover="hover"
+                    whileTap="tap"
+                    onHoverStart={() => setHoveredProject(project.id)}
+                    onHoverEnd={() => setHoveredProject(null)}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {/* Header with icon and status */}
+                    <div className="relative p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div 
+                          className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                          style={{ 
+                            background: `linear-gradient(135deg, ${project.color}, rgba(255, 255, 255, 0.2))`,
+                            boxShadow: `0 8px 32px ${project.color}20`
+                          }}
+                        >
+                          <project.icon className="text-2xl text-white" />
+                        </div>
+                        
+                        <div className="px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm"
+                          style={{
+                            backgroundColor: project.status === 'completed' 
+                              ? 'rgba(146, 254, 157, 0.2)' 
+                              : 'rgba(0, 201, 255, 0.2)',
+                            color: project.status === 'completed' ? '#92fe9d' : '#00c9ff',
+                            border: `1px solid ${project.status === 'completed' ? 'rgba(146, 254, 157, 0.3)' : 'rgba(0, 201, 255, 0.3)'}`
+                          }}
+                        >
+                          {project.status === 'completed' ? 'Completed' : 'In Progress'}
+                        </div>
+                      </div>
+
+                      {/* Decorative gradient line */}
+                      <div 
+                        className="h-1 w-full rounded-full mb-6"
+                        style={{ 
+                          background: `linear-gradient(90deg, ${project.color}, transparent)`,
+                          opacity: 0.6
+                        }}
+                      ></div>
+
+                      <h4 className="text-xl font-bold mb-3 text-[#fffce1]">{project.title}</h4>
+                      <p className="text-[#fffce1]/80 mb-6 text-sm leading-relaxed">{project.description}</p>
+                      
+                      {/* Tech stack with animated hover */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag, tagIndex) => (
+                          <motion.span 
+                            key={tag} 
+                            className="px-3 py-1 text-xs rounded-full text-[#fffce1] cursor-default"
+                            style={{ 
+                              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                              border: '1px solid rgba(255, 255, 255, 0.1)'
+                            }}
+                            whileHover={{ 
+                              scale: 1.05,
+                              backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                            }}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: tagIndex * 0.05 }}
+                          >
+                            {tag}
+                          </motion.span>
+                        ))}
+                      </div>
+
+                      {/* Floating elements for visual appeal */}
+                      <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-cyan-400 opacity-60 animate-pulse"></div>
+                      <div className="absolute bottom-6 right-8 w-1 h-1 rounded-full bg-green-400 opacity-40"></div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Professional Work Section */}
+          {activeTab === 1 && (
             <motion.div
               ref={professionalRef}
               key="professional"
@@ -385,7 +528,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
                         transition={{ duration: 0.4 }}
                       >
                         <Image 
-                          src={project.imageSrc} 
+                          src={project.imageSrc!} 
                           alt={project.title}
                           layout="fill"
                           objectFit="cover"
@@ -464,7 +607,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
           )}
           
           {/* Personal Web Projects Section */}
-          {activeTab === 1 && (
+          {activeTab === 2 && (
             <motion.div
               ref={personalRef}
               key="personal"
@@ -506,7 +649,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
                         transition={{ duration: 0.4 }}
                       >
                         <Image 
-                          src={project.imageSrc} 
+                          src={project.imageSrc!} 
                           alt={project.title}
                           layout="fill"
                           objectFit="cover"
@@ -585,7 +728,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
           )}
           
           {/* Mobile App Projects Section with Device Mockups */}
-          {activeTab === 2 && (
+          {activeTab === 3 && (
             <motion.div
               ref={mobileRef}
               key="mobile"
@@ -629,7 +772,7 @@ description:'A ride-hailing app where users can find and book rides, view trip h
                         <div className="relative h-full w-full overflow-hidden">
                           {/* App screenshot */}
                           <Image 
-                            src={project.imageSrc} 
+                            src={project.imageSrc!} 
                             alt={project.title}
                             layout="fill"
                             objectFit="cover"

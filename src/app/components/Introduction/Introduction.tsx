@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaLinux, FaReact, FaNodeJs, FaApple, FaDatabase, FaGithub, FaCode, FaServer, FaJs, FaAndroid } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiMongodb, SiPostgresql, SiExpress, SiFlutter, SiAndroidstudio } from 'react-icons/si';
-import { TbBrandReactNative } from 'react-icons/tb';
+import { FaLinux, FaDatabase, FaGithub, FaCode, FaServer, FaAws, FaGit } from 'react-icons/fa';
+import { SiApacheairflow, SiApachespark, SiTerraform, SiDocker, SiPython, SiPostgresql, SiMongodb, SiGooglecloud,  SiApachekafka, SiDbt, SiAmazonredshift } from 'react-icons/si';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import SplitType from 'split-type';
@@ -14,31 +13,31 @@ if (typeof window !== 'undefined') {
 }
 
 const technologies = {
-  frontend: [
-    { icon: <FaReact className="text-[#61DAFB]" />, name: 'React' },
-    { icon: <SiNextdotjs className="text-[#fffce1]" />, name: 'Next.js' },
-    { icon: <SiTailwindcss className="text-[#06B6D4]" />, name: 'Tailwind CSS' },
-    { icon: <FaJs className="text-[#F7DF1E]" />, name: 'JavaScript' },
-    { icon: <SiTypescript className="text-[#3178C6]" />, name: 'TypeScript' },
+  dataengineering: [
+    { icon: <SiApachespark className="text-[#E25A1C]" />, name: 'Apache Spark' },
+    { icon: <SiApacheairflow className="text-[#017CEE]" />, name: 'Apache Airflow' },
+    { icon: <SiDbt className="text-[#FF694B]" />, name: 'dbt' },
+    { icon: <SiApachekafka className="text-[#231F20]" />, name: 'Apache Kafka' },
+    { icon: <SiPython className="text-[#3776AB]" />, name: 'Python' },
   ],
-  backend: [
-    { icon: <FaNodeJs className="text-[#339933]" />, name: 'Node.js' },
-    { icon: <SiExpress className="text-[#fffce1]" />, name: 'Express' },
-    { icon: <SiMongodb className="text-[#47A248]" />, name: 'MongoDB' },
+  clouddevops: [
+    { icon: <FaAws className="text-[#FF9900]" />, name: 'AWS' },
+    { icon: <SiGooglecloud className="text-[#4285F4]" />, name: 'Google Cloud' },
+    { icon: <SiTerraform className="text-[#7B42BC]" />, name: 'Terraform' },
+    { icon: <SiDocker className="text-[#2496ED]" />, name: 'Docker' },
+    { icon: <FaLinux className="text-[#FCC624]" />, name: 'Linux' },
+  ],
+  databases: [
     { icon: <SiPostgresql className="text-[#4169E1]" />, name: 'PostgreSQL' },
+    { icon: <SiMongodb className="text-[#47A248]" />, name: 'MongoDB' },
+    { icon: <SiAmazonredshift className="text-[#8C4FFF]" />, name: 'Redshift' },
     { icon: <FaDatabase className="text-cyan-400" />, name: 'SQL' },
-  ],
-  mobile: [
-    { icon: <TbBrandReactNative className="text-[#61DAFB]" />, name: 'React Native' },
-    { icon: <SiFlutter className="text-[#02569B]" />, name: 'Flutter' },
-    { icon: <FaAndroid className="text-[#3DDC84]" />, name: 'Android' },
-    { icon: <FaApple className="text-[#fffce1]" />, name: 'iOS' },
   ],
   tools: [
     { icon: <FaGithub className="text-[#fffce1]" />, name: 'GitHub' },
     { icon: <FaCode className="text-cyan-400" />, name: 'VS Code' },
-    { icon: <SiAndroidstudio className="text-[#3DDC84]" />, name: 'Android Studio' },
-    { icon: <FaLinux className="text-[#FCC624]" />, name: 'Linux' },
+    { icon: <FaGit className="text-[#F05032]" />, name: 'Git' },
+    { icon: <FaServer className="text-[#fffce1]" />, name: 'Server Management' },
   ],
 };
 
@@ -167,32 +166,31 @@ const Introduction = () => {
   
   // Code typing animation - improved for cross-browser compatibility
   useEffect(() => {
-    // Code lines that will be displayed in the Developer.js window
+    // Code lines that will be displayed in the DataEngineer.py window
     const codeLines = [
-      "function Developer() {",
-      "  const name = 'Abdulrehman Iqbal';",
-      "  const company = 'ARIQ Systems';",
-      "  const [passion, setPassion] = useState('high');",
-      "  const [coffee, setCoffee] = useState('required');",
+      "class DataEngineer:",
+      "    def __init__(self):",
+      "        self.name = 'Abdulrehman Iqbal'",
+      "        self.company = 'ARIQ Systems'",
+      "        self.passion = 'transforming_data'",
+      "        self.tools = ['Airflow', 'Spark', 'BigQuery']",
       "",
-      "  useEffect(() => {",
-      "    const interval = setInterval(() => {",
-      "      solveProblems();",
-      "      buildCoolStuff();",
-      "    }, 24 * 60 * 60 * 1000); // daily",
-      "    ",
-      "    return () => clearInterval(interval);",
-      "  }, []);",
+      "    def build_pipeline(self):",
+      "        pipeline = Pipeline(",
+      "            extract=self.extract_data(),",
+      "            transform=self.clean_and_process(),",
+      "            load=self.load_to_warehouse()",
+      "        )",
+      "        return pipeline.run()",
       "",
-      "  return (",
-      "    <FullStackDeveloper",
-      "      name={name}",
-      "      company={company}",
-      "      creativeSolutions={true}",
-      "      neverStopLearning={true}",
-      "    />",
-      "  );",
-      "}"
+      "    def automate_workflow(self):",
+      "        with DAG('data_pipeline') as dag:",
+      "            extract_task >> transform_task >> load_task",
+      "",
+      "    def generate_insights(self):",
+      "        return self.analytics.create_dashboard()",
+      "",
+      "# Ready to transform your data! 🚀"
     ];
     
     // Initialize with empty lines that will be filled one by one
@@ -228,11 +226,11 @@ const Introduction = () => {
     
     // Apply React-safe styling approach
     highlightedLine = highlightedLine
-      .replace(/(function|const|return|useEffect)/g, `<span style="color: ${gradientColors.start}">$1</span>`)
-      .replace(/(useState|setInterval|clearInterval)/g, `<span style="color: ${gradientColors.mid}">$1</span>`)
+      .replace(/(class|def|return|with|import)/g, `<span style="color: ${gradientColors.start}">$1</span>`)
+      .replace(/(self|Pipeline|DAG)/g, `<span style="color: ${gradientColors.mid}">$1</span>`)
       .replace(/('.*?')/g, `<span style="color: ${gradientColors.end}">$1</span>`)
-      .replace(/(\{|\}|\(|\)|;|<|>|\[|\])/g, '<span class="text-gray-400">$1</span>')
-      .replace(/\b(true)\b/g, `<span style="color: ${gradientColors.mid}">$1</span>`);
+      .replace(/(\{|\}|\(|\)|;|<|>|\[|\]|:|=)/g, '<span class="text-gray-400">$1</span>')
+      .replace(/(#.*)/g, '<span class="text-gray-500 italic">$1</span>');
     
     return <div dangerouslySetInnerHTML={{ __html: highlightedLine }} />;
   };
@@ -310,7 +308,7 @@ const Introduction = () => {
               className="text-xl md:text-2xl font-semibold mb-6 italic"
               style={{ color: '#fffce1' }}
             >
-              Full-Stack Web & Mobile Developer
+              Cloud & Data Engineering Specialist
             </h2>
             
             <div 
@@ -319,12 +317,10 @@ const Introduction = () => {
               style={{ color: '#fffce1' }}
             >
               <p className="mb-4">
-                I&apos;m a Full Stack Developer skilled in building both mobile and web applications. I&apos;ve developed websites for UK-based companies and created several personal projects to stay ahead in tech. From responsive websites to intuitive mobile apps, I focus on clean design and solid performance to help businesses grow and stand out.
+                I&apos;m a Data Engineer specializing in building scalable data pipelines and automating workflows that transform raw data into actionable insights. With hands-on experience in cloud services like AWS and GCP, I design end-to-end solutions that handle real-time and batch processing at enterprise scale.
               </p>
               <p>
-                I&apos;m passionate about building technology that makes a positive impact, focusing on 
-                performance, accessibility, and intuitive user experiences. Every project is an opportunity 
-                to learn something new and push my creative boundaries.
+                My expertise spans Apache Spark for large-scale data processing, Apache Airflow for workflow orchestration, and infrastructure-as-code with Terraform and Docker. I&apos;ve delivered projects ranging from logistics data pipelines to real-time analytics systems, always focusing on reliability, performance, and cost optimization in cloud environments.
               </p>
             </div>
             
@@ -333,9 +329,9 @@ const Introduction = () => {
                 {Object.entries(technologies).map(([category, techs], categoryIndex) => (
                   <div key={category} className="mb-6 skill-category">
                     <h3 className="text-sm uppercase tracking-wider font-medium mb-3 text-[#fffce1]/60">
-                      {category === 'frontend' ? 'FRONTEND' : 
-                      category === 'backend' ? 'BACKEND' : 
-                      category === 'mobile' ? 'MOBILE DEVELOPMENT' : 'TOOLS & PLATFORMS'}
+                      {category === 'dataengineering' ? 'DATA ENGINEERING' : 
+                      category === 'clouddevops' ? 'CLOUD & DEVOPS' : 
+                      category === 'databases' ? 'DATABASES' : 'TOOLS & PLATFORMS'}
                     </h3>
                     <div className="flex flex-wrap gap-3">
                       {techs.map((tech, index) => (
@@ -362,7 +358,7 @@ const Introduction = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View Projects Below
+                Explore Data Projects
               </motion.button>
               <Link href="mailto:abdulrehman.iq@outlook.com">
                 <motion.button 
@@ -376,10 +372,10 @@ const Introduction = () => {
             </div>
           </motion.div>
           
-          {/* Right column - Visual content */}
+          {/* Right column - Visual content - Hidden on mobile, shown on laptop and larger */}
           <motion.div 
             ref={codeBlockContainerRef}
-            className="lg:w-1/2"
+            className="hidden lg:block lg:w-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -391,7 +387,7 @@ const Introduction = () => {
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="text-gray-400 text-sm ml-2">Developer.js</span>
+                  <span className="text-gray-400 text-sm ml-2">DataEngineer.py</span>
                 </div>
                 <div className="p-5 font-mono text-sm text-gray-300 overflow-hidden h-[400px]" ref={codeBlockRef}>
                   {displayedLines.map((line, index) => (
@@ -437,16 +433,17 @@ const Introduction = () => {
               {/* Floating elements */}
               {/* Icons */}
               {[
-                { Icon: FaReact, color: "#000000", size: 1 }, 
-                { Icon: TbBrandReactNative, color: "#000000", size: 0.9 }, 
-                { Icon: FaServer, color: "#000000", size: 1.1 }
+                { Icon: SiApacheairflow, color: "#000000", size: 1 }, 
+                { Icon: SiApachespark, color: "#000000", size: 0.9 }, 
+                { Icon: FaAws, color: "#000000", size: 1.1 },
+                { Icon: SiPython, color: "#000000", size: 1.05 }
               ].map((item, index) => (
                 <motion.div
                   key={`icon-${index}`}
                   className="absolute text-xl text-white"
                   style={{
-                    top: `${20 + index * 25}%`,
-                    right: `${-5 - index * 5}%`,
+                    top: `${15 + index * 20}%`,
+                    right: `${-8 - (index % 2) * 5}%`,
                   }}
                   animate={{
                     y: [0, -15, 0],
@@ -472,8 +469,6 @@ const Introduction = () => {
                   </div>
                 </motion.div>
               ))}
-              
-            
               
               {/* Floating company name */}
               <motion.div

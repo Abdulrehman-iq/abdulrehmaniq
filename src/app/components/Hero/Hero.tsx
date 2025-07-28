@@ -6,21 +6,14 @@ import { HiOutlineSparkles } from 'react-icons/hi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SiApacheairflow, SiApachespark, SiGooglecloud, SiPython } from 'react-icons/si'
 import { MdCloud, MdAnalytics } from 'react-icons/md'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import SplitType from 'split-type'
-
-// Register the ScrollTrigger plugin
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const impactWords = ["Real-time Pipelines", "Cloud Architecture", "Data Automation", "Actionable Insights"];
   
-  // Refs for GSAP animations
+  // Refs for animations
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
@@ -55,113 +48,24 @@ export default function Hero() {
         tagName: 'span' 
       });
       
-      // Animate the characters
-      gsap.from(splitHeadline.chars, {
-        opacity: 0,
-        y: 20,
-        rotateX: -90,
-        stagger: 0.02,
-        duration: 0.8,
-        ease: 'power4.out',
-        delay: 0.3
-      });
+      // Simple fade in animation for the characters
+      const chars = splitHeadline.chars;
+      if (chars) {
+        chars.forEach((char, index) => {
+          char.style.opacity = '0';
+          char.style.transform = 'translateY(20px) rotateX(-90deg)';
+          char.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+          char.style.transitionDelay = `${0.3 + index * 0.02}s`;
+          
+          setTimeout(() => {
+            char.style.opacity = '1';
+            char.style.transform = 'translateY(0) rotateX(0)';
+          }, 50);
+        });
+      }
     } catch (error) {
       console.error("Error with text splitting animation:", error);
     }
-  }, [isLoaded]);
-  
-  // GSAP ScrollTrigger animations
-  useEffect(() => {
-    if (!sectionRef.current || !isLoaded) return;
-    
-    // Create a primary scroll timeline
-    const heroTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 0.5,
-      }
-    });
-    
-    // More elaborate animations for the headline
-    if (headlineRef.current && titleWrapperRef.current) {
-      // Parallax effect for the title wrapper
-      heroTimeline.to(titleWrapperRef.current, {
-        y: -80,
-        opacity: 0.8,
-        scale: 0.95,
-        ease: "power1.inOut"
-      }, 0);
-    }
-    
-    // Animation for tagline - move up faster and fade more
-    if (taglineRef.current) {
-      heroTimeline.to(taglineRef.current, {
-        y: -120,
-        opacity: 0.2,
-        ease: "power2.inOut"
-      }, 0);
-    }
-    
-    // Animation for description - move up and fade out with a slight rotation
-    if (descriptionRef.current) {
-      heroTimeline.to(descriptionRef.current, {
-        y: -150,
-        opacity: 0,
-        ease: "power2.inOut",
-        rotationX: 5
-      }, 0);
-    }
-    
-    // Animation for CTA button - shrink slightly and move up faster
-    if (ctaRef.current) {
-      heroTimeline.to(ctaRef.current, {
-        y: -180,
-        scale: 0.8,
-        opacity: 0,
-        ease: "power3.inOut"
-      }, 0);
-    }
-    
-    // Staggered animation for specialties section items
-    if (specialtiesRef.current) {
-      const items = specialtiesRef.current.querySelectorAll('.specialty-item');
-      
-      heroTimeline.to(specialtiesRef.current, {
-        y: -50,
-        opacity: 0.6,
-        ease: "power1.inOut"
-      }, 0);
-      
-      // Add staggered movement to the specialty items
-      heroTimeline.to(items, {
-        y: (i) => -30 - (i * 15),
-        opacity: (i) => 0.8 - (i * 0.15),
-        stagger: 0.05,
-        ease: "power1.inOut"
-      }, 0);
-    }
-    
-    // Create cool background animation on scroll
-    const bgShapes = document.querySelectorAll('.bg-shape');
-    if (bgShapes.length) {
-      heroTimeline.to(bgShapes, {
-        y: (i) => i % 2 === 0 ? -150 : -100,
-        x: (i) => i % 2 === 0 ? 50 : -50,
-        opacity: 0.3,
-        scale: 1.2,
-        ease: "power1.inOut",
-        stagger: 0.1
-      }, 0);
-    }
-    
-    // Cleanup
-    return () => {
-      if (heroTimeline.scrollTrigger) {
-        heroTimeline.scrollTrigger.kill();
-      }
-    };
   }, [isLoaded]);
 
   // Handle smooth scroll on button click

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
-import { FaCode, FaMobileAlt, FaRocket, FaTools, FaUserTie, FaGlobe } from 'react-icons/fa'
+import { FaDatabase, FaCloud, FaChartLine, FaCogs, FaRocket, FaServer } from 'react-icons/fa'
 
 export default function WhyChooseAriqSystems() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -23,21 +23,36 @@ export default function WhyChooseAriqSystems() {
   // Combine refs into an array for easier usage
   const refs = [ref0, ref1, ref2, ref3, ref4, ref5]
 
+  // Detect mobile devices
+  const [isMobile, setIsMobile] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   })
   
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
-  const rotateX = useTransform(scrollYProgress, [0, 0.5], [0, 10])
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 1])
+  // Disable scroll animations on mobile
+  const backgroundY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '30%'])
+  const rotateX = useTransform(scrollYProgress, [0, 0.5], isMobile ? [0, 0] : [0, 10])
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], isMobile ? [1, 1, 1] : [1, 1.05, 1])
   
   // For floating animation on hover
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null)
   
   // Animated typing effect for the title
   const [displayedTitle, setDisplayedTitle] = useState("")
-  const fullTitle = "Your Next Reliable Developer" // Updated title
+  const fullTitle = "Your Data Engineering Partner"
   
   useEffect(() => {
     if (isTitleInView) {
@@ -55,37 +70,37 @@ export default function WhyChooseAriqSystems() {
     }
   }, [isTitleInView, fullTitle])
   
-  // Animated features with icons (removed AI specifics)
+  // Data Engineering focused features
   const features = [
     {
-      icon: FaCode,
-      title: "Full-Stack Web Development",
-      description: "Building scalable, performant web applications with modern frameworks and clean architecture patterns."
+      icon: FaDatabase,
+      title: "Data Pipeline Architecture",
+      description: "Building robust, scalable data pipelines using Apache Airflow, Spark, and modern cloud platforms for reliable data processing."
     },
     {
-      icon: FaMobileAlt,
-      title: "Mobile App Development",
-      description: "Creating intuitive mobile experiences that work flawlessly across iOS and Android platforms."
+      icon: FaCloud,
+      title: "Cloud Data Solutions",
+      description: "Expertise in AWS data services including S3, EMR, Redshift, and implementing medallion architecture patterns."
     },
     {
-      icon: FaUserTie,
-      title: "UK-Based Client Success",
-      description: "Proven track record of delivering successful projects for discerning UK-based clients."
+      icon: FaChartLine,
+      title: "Real-time Analytics",
+      description: "Designing streaming data solutions with Kafka, Flink, and building real-time dashboards for business intelligence."
     },
     {
-      icon: FaTools,
-      title: "Clean Development Practices",
-      description: "Commitment to writing maintainable, well-documented code that scales with your business needs."
+      icon: FaCogs,
+      title: "ETL/ELT Excellence",
+      description: "Transforming raw data into actionable insights using DBT, Great Expectations, and advanced data modeling techniques."
     },
     {
-      icon: FaGlobe,
-      title: "Cross-Platform Expertise",
-      description: "Seamlessly bridging web and mobile platforms to deliver cohesive digital experiences."
+      icon: FaServer,
+      title: "Data Warehouse Design",
+      description: "Creating optimized data warehouses and data lakes that support enterprise-scale analytics and reporting needs."
     },
     {
       icon: FaRocket,
-      title: "Future-Ready Solutions",
-      description: "Forward-thinking approach that prepares your digital assets for tomorrow's challenges."
+      title: "Performance Optimization",
+      description: "Ensuring high-performance data processing with monitoring, alerting, and continuous optimization strategies."
     }
   ]
 
@@ -137,9 +152,9 @@ export default function WhyChooseAriqSystems() {
         background: '#0d0d0d'
       }}
     >
-      {/* Background Elements with interactive animations */}
+      {/* Background Elements with conditional animations */}
       <div className="absolute inset-0 z-0">
-        {/* Abstract shape 1 - Cyan - with mouse follow effect */}
+        {/* Abstract shape 1 - Cyan */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.35 }}
@@ -158,11 +173,11 @@ export default function WhyChooseAriqSystems() {
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: 0.35,
-            rotate: [0, 5, 0, -5, 0]
+            rotate: isMobile ? 0 : [0, 5, 0, -5, 0]
           }}
           transition={{ 
             opacity: { duration: 1.5, delay: 0.5 },
-            rotate: { repeat: Infinity, duration: 20, ease: "linear" }
+            rotate: isMobile ? {} : { repeat: Infinity, duration: 20, ease: "linear" }
           }}
           className="absolute -bottom-40 -right-20 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full"
           style={{
@@ -172,16 +187,16 @@ export default function WhyChooseAriqSystems() {
           }}
         />
         
-        {/* Add extra floating elements that react to scroll */}
+        {/* Add extra floating elements with conditional animations */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: 0.25,
-            x: [0, 10, 0, -10, 0]
+            x: isMobile ? 0 : [0, 10, 0, -10, 0]
           }}
           transition={{ 
             opacity: { duration: 1.5, delay: 0.7 },
-            x: { repeat: Infinity, duration: 15, ease: "easeInOut" }
+            x: isMobile ? {} : { repeat: Infinity, duration: 15, ease: "easeInOut" }
           }}
           className="absolute top-1/3 right-[20%] w-[100px] md:w-[200px] h-[100px] md:h-[200px] rounded-full"
           style={{
@@ -195,11 +210,11 @@ export default function WhyChooseAriqSystems() {
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: 0.25,
-            scale: [1, 1.1, 1, 0.9, 1]
+            scale: isMobile ? 1 : [1, 1.1, 1, 0.9, 1]
           }}
           transition={{ 
             opacity: { duration: 1.5, delay: 0.9 },
-            scale: { repeat: Infinity, duration: 12, ease: "easeInOut" }
+            scale: isMobile ? {} : { repeat: Infinity, duration: 12, ease: "easeInOut" }
           }}
           className="absolute bottom-1/4 left-[15%] w-[150px] md:w-[300px] h-[150px] md:h-[300px] rounded-full"
           style={{
@@ -237,8 +252,8 @@ export default function WhyChooseAriqSystems() {
             animate={isTitleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 1.5, ease: "easeOut" }}
           >
-            Delivering exceptional software solutions through thoughtful design, clean code, and innovative approaches that 
-            solve real business problems and create delightful user experiences.
+            Transforming raw data into strategic business assets through scalable data engineering solutions, 
+            cloud-native architectures, and cutting-edge analytics platforms.
           </motion.p>
         </motion.div>
         
@@ -278,7 +293,7 @@ export default function WhyChooseAriqSystems() {
               <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-[#fffce1]">{feature.title}</h3>
               <p className="text-sm md:text-base text-[#fffce1]/70 text-justify">{feature.description}</p>
               
-              {/* Animated icon that appears on hover (without "Learn more" text) */}
+              {/* Animated icon that appears on hover */}
               <AnimatePresence>
                 {hoveredFeature === index && (
                   <motion.div
@@ -301,7 +316,7 @@ export default function WhyChooseAriqSystems() {
           ))}
         </motion.div>
         
-        {/* Cross-Platform Experience Showcase with scroll-triggered animations - IMPROVED FOR MOBILE */}
+        {/* Data Pipeline Architecture Showcase */}
         <motion.div
           style={{ rotateX }}
           initial={{ opacity: 0, y: 40 }}
@@ -309,11 +324,11 @@ export default function WhyChooseAriqSystems() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="flex flex-col md:flex-row items-center gap-8 md:gap-10 mb-16 md:mb-20 perspective-1000"
         >
-          {/* NEW ENHANCED TECH ILLUSTRATION */}
+          {/* Data Pipeline Illustration */}
           <motion.div 
             className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0"
-            whileInView={{ 
-              rotate: [0, 5, 0, -5, 0],
+            whileInView={isMobile ? {} : { 
+              rotate: [0, 2, 0, -2, 0],
               transition: { duration: 10, repeat: Infinity, ease: "easeInOut" }
             }}
             viewport={{ once: false, amount: 0.5 }}
@@ -330,174 +345,191 @@ export default function WhyChooseAriqSystems() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Enhanced Tech-Focused SVG Illustration */}
+                {/* Data Pipeline SVG Illustration */}
                 <svg width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
                   {/* Background elements */}
                   <motion.circle 
                     cx="150" cy="150" r="120" fill="rgba(0, 201, 255, 0.05)"
-                    animate={{ r: [120, 125, 120] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    animate={isMobile ? {} : { r: [120, 125, 120] }}
+                    transition={isMobile ? {} : { duration: 8, repeat: Infinity, ease: "easeInOut" }}
                   />
                   
-                  {/* Browser/Desktop Platform */}
+                  {/* Data Sources */}
                   <motion.rect 
-                    x="80" y="50" width="140" height="90" rx="6" fill="#0d0d0d" 
+                    x="20" y="60" width="60" height="40" rx="8" fill="#0d0d0d" 
                     stroke="#00c9ff" strokeWidth="2" 
-                    animate={{ y: [50, 47, 50] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    animate={isMobile ? {} : { y: [60, 58, 60] }}
+                    transition={isMobile ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <rect x="80" y="50" width="140" height="20" rx="6" fill="#00c9ff" opacity="0.3" />
-                  <circle cx="95" cy="60" r="5" fill="#ff5f57" />
-                  <circle cx="115" cy="60" r="5" fill="#febc2e" />
-                  <circle cx="135" cy="60" r="5" fill="#28c840" />
+                  <text x="50" y="85" textAnchor="middle" fill="#00c9ff" fontSize="12" fontWeight="bold">API</text>
                   
-                  {/* Browser Content */}
-                  <rect x="90" y="80" width="50" height="5" rx="2" fill="#00c9ff" />
-                  <rect x="90" y="95" width="120" height="5" rx="2" fill="#fffce1" opacity="0.7" />
-                  <rect x="90" y="110" width="80" height="5" rx="2" fill="#fffce1" opacity="0.7" />
                   <motion.rect 
-                    x="90" y="125" width="100" height="5" rx="2" fill="#92fe9d" opacity="0.8"
-                    animate={{ width: [100, 60, 100] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-                  />
-                  
-                  {/* Mobile Device */}
-                  <motion.rect 
-                    x="180" y="160" width="40" height="80" rx="8" fill="#0d0d0d" 
+                    x="20" y="120" width="60" height="40" rx="8" fill="#0d0d0d" 
                     stroke="#92fe9d" strokeWidth="2"
-                    animate={{ y: [160, 163, 160] }}
-                    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    animate={isMobile ? {} : { y: [120, 122, 120] }}
+                    transition={isMobile ? {} : { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
-                  <rect x="180" y="180" width="40" height="45" rx="1" fill="#92fe9d" opacity="0.3" />
-                  <rect x="195" y="170" width="10" height="3" rx="1" fill="#fffce1" />
-                  <circle cx="200" cy="230" r="5" stroke="#fffce1" strokeWidth="1" fill="none" />
+                  <text x="50" y="145" textAnchor="middle" fill="#92fe9d" fontSize="12" fontWeight="bold">DB</text>
                   
-                  {/* Tablet Device */}
                   <motion.rect 
-                    x="70" y="160" width="70" height="90" rx="8" fill="#0d0d0d" 
+                    x="20" y="180" width="60" height="40" rx="8" fill="#0d0d0d" 
+                    stroke="#fffce1" strokeWidth="2"
+                    animate={isMobile ? {} : { y: [180, 183, 180] }}
+                    transition={isMobile ? {} : { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  />
+                  <text x="50" y="205" textAnchor="middle" fill="#fffce1" fontSize="12" fontWeight="bold">Files</text>
+                  
+                  {/* Processing Layer - Airflow/Spark */}
+                  <motion.rect 
+                    x="120" y="110" width="60" height="80" rx="12" fill="#0d0d0d" 
                     stroke="#00c9ff" strokeWidth="2"
-                    animate={{ y: [160, 165, 160] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    animate={isMobile ? {} : { scale: [1, 1.02, 1] }}
+                    transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <rect x="80" y="180" width="50" height="55" rx="1" fill="#00c9ff" opacity="0.3" />
-                  <rect x="100" y="170" width="10" height="3" rx="1" fill="#fffce1" />
-                  <circle cx="105" cy="240" r="5" stroke="#fffce1" strokeWidth="1" fill="none" />
+                  <text x="150" y="140" textAnchor="middle" fill="#00c9ff" fontSize="10" fontWeight="bold">Airflow</text>
+                  <text x="150" y="155" textAnchor="middle" fill="#92fe9d" fontSize="10" fontWeight="bold">Spark</text>
+                  <text x="150" y="170" textAnchor="middle" fill="#fffce1" fontSize="10" fontWeight="bold">ETL</text>
                   
-                  {/* Connection Lines Between Devices */}
+                  {/* Data Storage - Warehouse */}
+                  <motion.rect 
+                    x="220" y="110" width="60" height="80" rx="12" fill="#0d0d0d" 
+                    stroke="#92fe9d" strokeWidth="2"
+                    animate={isMobile ? {} : { y: [110, 108, 110] }}
+                    transition={isMobile ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                  />
+                  <text x="250" y="140" textAnchor="middle" fill="#92fe9d" fontSize="10" fontWeight="bold">Data</text>
+                  <text x="250" y="155" textAnchor="middle" fill="#00c9ff" fontSize="10" fontWeight="bold">Warehouse</text>
+                  <text x="250" y="170" textAnchor="middle" fill="#fffce1" fontSize="10" fontWeight="bold">Redshift</text>
+                  
+                  {/* Data Flow Arrows */}
                   <motion.path 
-                    d="M140 100 L180 180" 
+                    d="M85 80 L115 135" 
                     stroke="#00c9ff" 
-                    strokeWidth="1" 
-                    strokeDasharray="5,5"
+                    strokeWidth="2" 
                     fill="none"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [0.3, 0.8, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    markerEnd="url(#arrowhead1)"
+                    animate={isMobile ? {} : { strokeWidth: [2, 3, 2], opacity: [0.7, 1, 0.7] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   />
                   <motion.path 
-                    d="M120 100 L100 170" 
+                    d="M85 140 L115 150" 
                     stroke="#92fe9d" 
-                    strokeWidth="1" 
-                    strokeDasharray="5,5"
+                    strokeWidth="2" 
                     fill="none"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [0.3, 0.8, 0.3] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    markerEnd="url(#arrowhead2)"
+                    animate={isMobile ? {} : { strokeWidth: [2, 3, 2], opacity: [0.7, 1, 0.7] }}
+                    transition={isMobile ? {} : { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
                   <motion.path 
-                    d="M120 210 L170 210" 
+                    d="M85 200 L115 165" 
                     stroke="#fffce1" 
-                    strokeWidth="1" 
-                    strokeDasharray="5,5"
+                    strokeWidth="2" 
                     fill="none"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [0.3, 0.8, 0.3] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    markerEnd="url(#arrowhead3)"
+                    animate={isMobile ? {} : { strokeWidth: [2, 3, 2], opacity: [0.7, 1, 0.7] }}
+                    transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   />
                   
-                  {/* Tech Icons/Symbols */}
-                  <motion.circle 
-                    cx="150" cy="140" r="12" fill="#00c9ff" opacity="0.8"
-                    animate={{ 
-                      r: [12, 14, 12],
-                      opacity: [0.8, 1, 0.8]
-                    }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  <text x="146" y="145" fill="#0d0d0d" fontSize="12" fontWeight="bold">R</text>
-                  
-                  <motion.circle 
-                    cx="200" cy="130" r="10" fill="#92fe9d" opacity="0.8"
-                    animate={{ 
-                      r: [10, 12, 10],
-                      opacity: [0.8, 1, 0.8]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
-                  />
-                  <text x="196" y="134" fill="#0d0d0d" fontSize="10" fontWeight="bold">N</text>
-                  
-                  <motion.circle 
-                    cx="65" cy="115" r="10" fill="#fffce1" opacity="0.8"
-                    animate={{ 
-                      r: [10, 12, 10],
-                      opacity: [0.8, 1, 0.8]
-                    }}
-                    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                  />
-                  <text x="62" y="119" fill="#0d0d0d" fontSize="10" fontWeight="bold">T</text>
-                  
-                  {/* Code Brackets */}
                   <motion.path 
-                    d="M40 180 L60 160 L40 140" 
+                    d="M185 150 L215 150" 
                     stroke="#00c9ff" 
                     strokeWidth="3" 
-                    fill="none" 
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-                  />
-                  
-                  <motion.path 
-                    d="M260 180 L240 160 L260 140" 
-                    stroke="#92fe9d" 
-                    strokeWidth="3" 
                     fill="none"
-                    animate={{ x: [0, -5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                    markerEnd="url(#arrowhead1)"
+                    animate={isMobile ? {} : { strokeWidth: [3, 4, 3], opacity: [0.8, 1, 0.8] }}
+                    transition={isMobile ? {} : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   />
                   
-                  {/* Data Flow Animation */}
+                  {/* Arrow markers */}
+                  <defs>
+                    <marker id="arrowhead1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#00c9ff" />
+                    </marker>
+                    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#92fe9d" />
+                    </marker>
+                    <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#fffce1" />
+                    </marker>
+                  </defs>
+                  
+                  {/* Monitoring/Analytics Layer */}
                   <motion.circle 
-                    cx="0" cy="0" r="3" fill="#00c9ff"
-                    animate={{ 
-                      cx: [140, 180],
-                      cy: [100, 180],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    cx="150" cy="60" r="25" fill="rgba(0, 201, 255, 0.1)" 
+                    stroke="#00c9ff" strokeWidth="2"
+                    animate={isMobile ? {} : { r: [25, 27, 25] }}
+                    transition={isMobile ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   />
+                  <text x="150" y="65" textAnchor="middle" fill="#00c9ff" fontSize="10" fontWeight="bold">Monitor</text>
                   
                   <motion.circle 
-                    cx="0" cy="0" r="3" fill="#92fe9d"
-                    animate={{ 
-                      cx: [120, 100],
-                      cy: [100, 170],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                    cx="150" cy="240" r="25" fill="rgba(146, 254, 157, 0.1)" 
+                    stroke="#92fe9d" strokeWidth="2"
+                    animate={isMobile ? {} : { r: [25, 27, 25] }}
+                    transition={isMobile ? {} : { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+                  />
+                  <text x="150" y="245" textAnchor="middle" fill="#92fe9d" fontSize="10" fontWeight="bold">Analytics</text>
+                  
+                  {/* Connection lines to monitoring */}
+                  <motion.path 
+                    d="M150 90 L150 105" 
+                    stroke="#00c9ff" 
+                    strokeWidth="1" 
+                    strokeDasharray="3,3"
+                    fill="none"
+                    animate={isMobile ? {} : { opacity: [0.5, 1, 0.5] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <motion.path 
+                    d="M150 195 L150 210" 
+                    stroke="#92fe9d" 
+                    strokeWidth="1" 
+                    strokeDasharray="3,3"
+                    fill="none"
+                    animate={isMobile ? {} : { opacity: [0.5, 1, 0.5] }}
+                    transition={isMobile ? {} : { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
                   />
                   
-                  <motion.circle 
-                    cx="0" cy="0" r="3" fill="#fffce1"
-                    animate={{ 
-                      cx: [120, 170],
-                      cy: [210, 210],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                  />
+                  {/* Data flow particles */}
+                  {!isMobile && (
+                    <>
+                      <motion.circle 
+                        cx="0" cy="0" r="2" fill="#00c9ff"
+                        animate={{ 
+                          cx: [85, 150, 215],
+                          cy: [80, 135, 150],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                      
+                      <motion.circle 
+                        cx="0" cy="0" r="2" fill="#92fe9d"
+                        animate={{ 
+                          cx: [85, 150, 215],
+                          cy: [140, 150, 150],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                      />
+                      
+                      <motion.circle 
+                        cx="0" cy="0" r="2" fill="#fffce1"
+                        animate={{ 
+                          cx: [85, 150, 215],
+                          cy: [200, 165, 150],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                      />
+                    </>
+                  )}
                 </svg>
               </motion.div>
             </div>
           </motion.div>
           
-          {/* Text Content with animated entrance of items - IMPROVED FOR MOBILE */}
+          {/* Text Content */}
           <motion.div 
             className="w-full md:w-1/2 px-4 md:px-0"
             variants={containerVariants}
@@ -509,170 +541,178 @@ export default function WhyChooseAriqSystems() {
               variants={itemVariants}
               className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-[#fffce1] text-center md:text-left"
             >
-              Bridging Web & Mobile Platforms
+              End-to-End Data Pipeline Solutions
             </motion.h3>
             <motion.p 
               variants={itemVariants}
               className="text-sm md:text-base text-[#fffce1]/80 mb-3 md:mb-4 leading-relaxed text-justify md:text-left"
             >
-              With extensive experience across both web and mobile development ecosystems, Ariq Systems delivers cohesive 
-              solutions that work seamlessly wherever your users are.
+              From data ingestion to analytics, I build comprehensive data engineering solutions that transform raw data 
+              into valuable business insights using industry-leading tools and best practices.
             </motion.p>
             <motion.p 
               variants={itemVariants}
               className="text-sm md:text-base text-[#fffce1]/80 mb-5 md:mb-6 leading-relaxed text-justify md:text-left"
             >
-              Each project benefits from platform-specific optimization while maintaining consistency in quality, 
-              performance, and user experience.
+              Each pipeline is designed for scalability, reliability, and performance, with built-in monitoring, 
+              data quality checks, and automated workflows.
             </motion.p>
             <motion.ul 
-  variants={containerVariants}
-  className="space-y-2 flex flex-col w-full px-2 md:px-0"
->
-  {["React & Next.js", "React Native", "Node.js", "RESTful APIs", "TypeScript", "Database Design"].map((skill, index) => (
-    <motion.li 
-      key={index} 
-      className="flex items-center justify-start w-full"
-      variants={itemVariants}
-      whileHover={{ x: 5, transition: { duration: 0.2 } }}
-    >
-      <motion.span 
-        className="w-2 h-2 rounded-full mr-3 flex-shrink-0"
-        style={{ backgroundColor: index % 2 === 0 ? '#00c9ff' : '#92fe9d' }}
-        animate={{ scale: [1, 1.5, 1] }}
-        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-      ></motion.span>
-      <span className="text-sm md:text-base text-[#fffce1]/90 text-left">{skill}</span>
-    </motion.li>
-  ))}
-</motion.ul>
+              variants={containerVariants}
+              className="space-y-2 flex flex-col w-full px-2 md:px-0"
+            >
+              {["Apache Airflow", "Apache Spark", "AWS Data Services", "DBT & Great Expectations", "Kafka & Flink", "Data Warehouse Design"].map((skill, index) => (
+                <motion.li 
+                  key={index} 
+                  className="flex items-center justify-start w-full"
+                  variants={itemVariants}
+                  whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                >
+                  <motion.span 
+                    className="w-2 h-2 rounded-full mr-3 flex-shrink-0"
+                    style={{ backgroundColor: index % 2 === 0 ? '#00c9ff' : '#92fe9d' }}
+                    animate={isMobile ? {} : { scale: [1, 1.5, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                  ></motion.span>
+                  <span className="text-sm md:text-base text-[#fffce1]/90 text-left">{skill}</span>
+                </motion.li>
+              ))}
+            </motion.ul>
           </motion.div>
         </motion.div>
         
-        {/* Future Vision with parallax effect - IMPROVED FOR MOBILE */}
+        {/* Cloud & Scalability Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.7, delay: 0.4 }}
           className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-10"
         >
-          {/* Generic technology illustration with animated nodes */}
+          {/* Cloud Architecture illustration */}
           <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
             <div className="relative w-[250px] md:w-[300px]">
               <motion.div 
                 className="absolute inset-0 blur-2xl rounded-full"
-                animate={{ 
+                animate={isMobile ? {} : { 
                   background: [
                     'radial-gradient(circle, rgba(146, 254, 157, 0.2), rgba(0, 201, 255, 0.1))',
                     'radial-gradient(circle, rgba(0, 201, 255, 0.2), rgba(146, 254, 157, 0.1))',
                     'radial-gradient(circle, rgba(146, 254, 157, 0.2), rgba(0, 201, 255, 0.1))'
                   ]
                 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                transition={isMobile ? {} : { duration: 10, repeat: Infinity, ease: "linear" }}
               ></motion.div>
               <div className="relative w-[250px] h-[250px] md:w-[300px] md:h-[300px] flex items-center justify-center">
-                {/* Technology/Future Illustration with animated connections */}
+                {/* Cloud Infrastructure SVG */}
                 <svg width="100%" height="100%" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                  <motion.circle 
-                    cx="150" cy="150" r="80" fill="#00c9ff" opacity="0.2"
-                    animate={{ r: [80, 85, 80] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  <motion.circle 
-                    cx="150" cy="150" r="70" fill="#00c9ff" opacity="0.2" stroke="#00c9ff" strokeWidth="1"
-                    animate={{ r: [70, 65, 70] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  {/* Cloud shape */}
+                  <motion.path 
+                    d="M100 150 C80 130, 120 110, 150 130 C180 110, 220 130, 200 150 C220 170, 180 190, 150 170 C120 190, 80 170, 100 150 Z"
+                    fill="rgba(0, 201, 255, 0.15)" stroke="#00c9ff" strokeWidth="2"
+                    animate={isMobile ? {} : { scale: [1, 1.02, 1] }}
+                    transition={isMobile ? {} : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
                   />
                   
-                  {/* Connected nodes representing technology with pulse animations */}
-                  <motion.circle 
-                    cx="150" cy="150" r="10" fill="#00c9ff"
-                    animate={{ r: [10, 12, 10], fill: ['#00c9ff', '#92fe9d', '#00c9ff'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  {/* AWS Services nodes */}
+                  <motion.circle cx="120" cy="130" r="12" fill="#00c9ff" opacity="0.8"
+                    animate={isMobile ? {} : { r: [12, 14, 12] }}
+                    transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <motion.circle 
-                    cx="200" cy="130" r="8" fill="#00c9ff"
-                    animate={{ r: [8, 10, 8] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  <text x="120" y="135" textAnchor="middle" fill="#0d0d0d" fontSize="8" fontWeight="bold">S3</text>
+                  
+                  <motion.circle cx="180" cy="130" r="12" fill="#92fe9d" opacity="0.8"
+                    animate={isMobile ? {} : { r: [12, 14, 12] }}
+                    transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
-                  <motion.circle 
-                    cx="180" cy="190" r="8" fill="#92fe9d"
-                    animate={{ r: [8, 10, 8] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  <text x="180" y="135" textAnchor="middle" fill="#0d0d0d" fontSize="8" fontWeight="bold">EMR</text>
+                  
+                  <motion.circle cx="150" cy="170" r="12" fill="#fffce1" opacity="0.8"
+                    animate={isMobile ? {} : { r: [12, 14, 12] }}
+                    transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                   />
-                  <motion.circle 
-                    cx="120" cy="190" r="8" fill="#92fe9d"
-                    animate={{ r: [8, 10, 8] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                  <text x="150" y="175" textAnchor="middle" fill="#0d0d0d" fontSize="7" fontWeight="bold">Redshift</text>
+                  
+                  {/* Data flow connections */}
+                  <motion.path 
+                    d="M130 135 L170 135" stroke="#00c9ff" strokeWidth="2" fill="none"
+                    animate={isMobile ? {} : { opacity: [0.5, 1, 0.5] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <motion.circle 
-                    cx="100" cy="130" r="8" fill="#00c9ff"
-                    animate={{ r: [8, 10, 8] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                  <motion.path 
+                    d="M135 145 L145 160" stroke="#92fe9d" strokeWidth="2" fill="none"
+                    animate={isMobile ? {} : { opacity: [0.5, 1, 0.5] }}
+                    transition={isMobile ? {} : { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                  />
+                  <motion.path 
+                    d="M165 145 L155 160" stroke="#00c9ff" strokeWidth="2" fill="none"
+                    animate={isMobile ? {} : { opacity: [0.5, 1, 0.5] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
                   />
                   
-                  {/* Animated connecting lines with pulse effect */}
-                  <motion.line 
-                    x1="150" y1="150" x2="200" y2="130" stroke="#00c9ff" strokeWidth="1"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  {/* Monitoring & Analytics */}
+                  <motion.rect x="70" y="90" width="40" height="20" rx="10" fill="rgba(0, 201, 255, 0.2)" stroke="#00c9ff"
+                    animate={isMobile ? {} : { y: [90, 88, 90] }}
+                    transition={isMobile ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <motion.line 
-                    x1="150" y1="150" x2="180" y2="190" stroke="#92fe9d" strokeWidth="1"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  <text x="90" y="102" textAnchor="middle" fill="#00c9ff" fontSize="8">Grafana</text>
+                  
+                  <motion.rect x="190" y="90" width="40" height="20" rx="10" fill="rgba(146, 254, 157, 0.2)" stroke="#92fe9d"
+                    animate={isMobile ? {} : { y: [90, 92, 90] }}
+                    transition={isMobile ? {} : { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   />
-                  <motion.line 
-                    x1="150" y1="150" x2="120" y2="190" stroke="#92fe9d" strokeWidth="1"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                  <text x="210" y="102" textAnchor="middle" fill="#92fe9d" fontSize="8">Power BI</text>
+                  
+                  {/* Connection lines from cloud to monitoring */}
+                  <motion.path d="M110 120 L100 110" stroke="#00c9ff" strokeWidth="1" strokeDasharray="2,2" fill="none"
+                    animate={isMobile ? {} : { opacity: [0.3, 0.8, 0.3] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  <motion.line 
-                    x1="150" y1="150" x2="100" y2="130" stroke="#00c9ff" strokeWidth="1"
-                    animate={{ strokeWidth: [1, 2, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                  <motion.path d="M190 120 L200 110" stroke="#92fe9d" strokeWidth="1" strokeDasharray="2,2" fill="none"
+                    animate={isMobile ? {} : { opacity: [0.3, 0.8, 0.3] }}
+                    transition={isMobile ? {} : { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
                   />
                   
-                  {/* Remaining static lines */}
-                  <line x1="200" y1="130" x2="180" y2="190" stroke="#00c9ff" strokeWidth="1" opacity="0.5" />
-                  <line x1="180" y1="190" x2="120" y2="190" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="120" y1="190" x2="100" y2="130" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="100" y1="130" x2="200" y2="130" stroke="#00c9ff" strokeWidth="1" opacity="0.5" />
+                  {/* Scalability indicators */}
+                  <motion.circle cx="80" cy="200" r="15" fill="rgba(0, 201, 255, 0.1)" stroke="#00c9ff"
+                    animate={isMobile ? {} : { r: [15, 18, 15] }}
+                    transition={isMobile ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <text x="80" y="205" textAnchor="middle" fill="#00c9ff" fontSize="9">Scale</text>
                   
-                  {/* Secondary nodes with subtle animations */}
-                  {[
-                    { cx: 175, cy: 100, fill: "#00c9ff", delay: 0 },
-                    { cx: 225, cy: 160, fill: "#92fe9d", delay: 0.5 },
-                    { cx: 150, cy: 220, fill: "#92fe9d", delay: 1 },
-                    { cx: 75, cy: 160, fill: "#92fe9d", delay: 1.5 },
-                    { cx: 125, cy: 100, fill: "#00c9ff", delay: 2 }
-                  ].map((node, index) => (
-                    <motion.circle 
-                      key={index}
-                      cx={node.cx} 
-                      cy={node.cy} 
-                      r="5" 
-                      fill={node.fill}
-                      animate={{ r: [5, 6, 5], opacity: [1, 0.7, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: node.delay }}
-                    />
-                  ))}
+                  <motion.circle cx="220" cy="200" r="15" fill="rgba(146, 254, 157, 0.1)" stroke="#92fe9d"
+                    animate={isMobile ? {} : { r: [15, 18, 15] }}
+                    transition={isMobile ? {} : { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+                  />
+                  <text x="220" y="205" textAnchor="middle" fill="#92fe9d" fontSize="9">Secure</text>
                   
-                  {/* Secondary connections remain static */}
-                  <line x1="200" y1="130" x2="175" y2="100" stroke="#00c9ff" strokeWidth="1" opacity="0.5" />
-                  <line x1="200" y1="130" x2="225" y2="160" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="180" y1="190" x2="225" y2="160" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="180" y1="190" x2="150" y2="220" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="120" y1="190" x2="150" y2="220" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="120" y1="190" x2="75" y2="160" stroke="#92fe9d" strokeWidth="1" opacity="0.5" />
-                  <line x1="100" y1="130" x2="75" y2="160" stroke="#00c9ff" strokeWidth="1" opacity="0.5" />
-                  <line x1="100" y1="130" x2="125" y2="100" stroke="#00c9ff" strokeWidth="1" opacity="0.5" />
+                  {/* Data particles flowing */}
+                  {!isMobile && (
+                    <>
+                      <motion.circle cx="0" cy="0" r="2" fill="#00c9ff"
+                        animate={{
+                          cx: [50, 120, 180, 250],
+                          cy: [150, 130, 130, 150],
+                          opacity: [0, 1, 1, 0]
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                      
+                      <motion.circle cx="0" cy="0" r="2" fill="#92fe9d"
+                        animate={{
+                          cx: [150, 150, 150],
+                          cy: [50, 130, 200],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                      />
+                    </>
+                  )}
                 </svg>
               </div>
             </div>
           </div>
           
-          {/* Text Content with staggered animation - IMPROVED FOR MOBILE */}
+          {/* Text Content */}
           <motion.div 
             className="w-full md:w-1/2 px-4 md:px-0"
             variants={containerVariants}
@@ -686,51 +726,51 @@ export default function WhyChooseAriqSystems() {
             >
               <motion.span
                 className="inline-block"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                animate={isMobile ? {} : { scale: [1, 1.02, 1] }}
+                transition={isMobile ? {} : { duration: 5, repeat: Infinity, ease: "easeInOut" }}
               >
-                Looking to the Future
+                Cloud-Native & Scalable Solutions
               </motion.span>
             </motion.h3>
             <motion.p 
               variants={itemVariants}
               className="text-sm md:text-base text-[#fffce1]/80 mb-3 md:mb-4 leading-relaxed text-justify md:text-left"
             >
-              Ariq Systems is committed to staying at the forefront of technology, with plans to expand into emerging 
-              fields including artificial intelligence as part of our commitment to delivering tomorrow&apos;s solutions today.
+              Leveraging AWS cloud services to build enterprise-grade data platforms that scale automatically with your 
+              business needs while maintaining high availability and security standards.
             </motion.p>
             <motion.p 
               variants={itemVariants}
               className="text-sm md:text-base text-[#fffce1]/80 mb-5 md:mb-6 leading-relaxed text-justify md:text-left"
             >
-              With a foundation built on technical excellence and a dedication to continuous learning, we&apos;re positioned 
-              to help your business not just keep pace with technology, but harness it for competitive advantage.
+              From real-time streaming to batch processing, each solution is architected for performance, 
+              cost-efficiency, and seamless integration with existing business systems.
             </motion.p>
             <motion.ul 
-  variants={containerVariants}
-  className="space-y-2 flex flex-col w-full px-2 md:px-0"
->
-  {["Cutting-Edge Technologies", "Performance Optimization", "Responsive Design", "Scalable Architecture", "Security Best Practices", "Future-Proof Development"].map((skill, index) => (
-    <motion.li 
-      key={index} 
-      className="flex items-center justify-start w-full"
-      variants={itemVariants}
-      whileHover={{ x: 5, transition: { duration: 0.2 } }}
-    >
-      <motion.span 
-        className="w-2 h-2 rounded-full mr-3 flex-shrink-0"
-        style={{ backgroundColor: index % 2 === 0 ? '#00c9ff' : '#92fe9d' }}
-        animate={{ scale: [1, 1.5, 1] }}
-        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-      ></motion.span>
-      <span className="text-sm md:text-base text-[#fffce1]/90 text-left">{skill}</span>
-    </motion.li>
-  ))}
-</motion.ul>
+              variants={containerVariants}
+              className="space-y-2 flex flex-col w-full px-2 md:px-0"
+            >
+              {["AWS S3 & EMR", "Real-time Streaming", "Auto-scaling Architecture", "Data Quality Monitoring", "Security & Compliance", "Cost Optimization"].map((skill, index) => (
+                <motion.li 
+                  key={index} 
+                  className="flex items-center justify-start w-full"
+                  variants={itemVariants}
+                  whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                >
+                  <motion.span 
+                    className="w-2 h-2 rounded-full mr-3 flex-shrink-0"
+                    style={{ backgroundColor: index % 2 === 0 ? '#00c9ff' : '#92fe9d' }}
+                    animate={isMobile ? {} : { scale: [1, 1.5, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                  ></motion.span>
+                  <span className="text-sm md:text-base text-[#fffce1]/90 text-left">{skill}</span>
+                </motion.li>
+              ))}
+            </motion.ul>
           </motion.div>
         </motion.div>
         
-        {/* Call to Action with attention-grabbing animations - IMPROVED FOR MOBILE */}
+        {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -739,16 +779,16 @@ export default function WhyChooseAriqSystems() {
         >
           <motion.h3 
             className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-[#fffce1]"
-            animate={{ 
+            animate={isMobile ? {} : { 
               textShadow: [
                 "0 0 5px rgba(0, 201, 255, 0)", 
                 "0 0 10px rgba(0, 201, 255, 0.3)", 
                 "0 0 5px rgba(0, 201, 255, 0)"
               ]
             }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            transition={isMobile ? {} : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
-            Let&apos;s Build Something Smart Together
+            Ready to Transform Your Data?
           </motion.h3>
           <motion.p 
             className="text-sm md:text-base text-[#fffce1]/80 max-w-2xl mx-auto mb-6 md:mb-8 text-justify md:text-center"
@@ -757,11 +797,11 @@ export default function WhyChooseAriqSystems() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            Ready to transform your ideas into powerful digital solutions? Leverage our expertise in web and mobile 
-            development to create standout applications that drive results.
+            Let&apos;s build robust data engineering solutions that turn your raw data into strategic business assets. 
+            From pipeline design to analytics platforms, I&apos;ll help you harness the full potential of your data.
           </motion.p>
           <motion.a
-            href="mailto:abdulrehman.iq@outlook.com" // Added email link
+            href="mailto:abdulrehman.iq@outlook.com"
             whileHover={{ 
               scale: 1.05, 
               boxShadow: '0 0 25px rgba(0, 201, 255, 0.4)'
@@ -777,28 +817,30 @@ export default function WhyChooseAriqSystems() {
             }}
           >
             <motion.span 
-              animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              animate={isMobile ? {} : { y: [0, -3, 0] }}
+              transition={isMobile ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="relative z-10"
             >
-              Contact Me
+              Let&apos;s Discuss Your Data Needs
             </motion.span>
             
             {/* Animated pulse effect around button */}
-            <motion.span
-              className="absolute inset-0 rounded-xl"
-              animate={{ 
-                boxShadow: [
-                  '0 0 0 0 rgba(0, 201, 255, 0.1)',
-                  '0 0 0 10px rgba(0, 201, 255, 0)',
-                ],
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-            />
+            {!isMobile && (
+              <motion.span
+                className="absolute inset-0 rounded-xl"
+                animate={{ 
+                  boxShadow: [
+                    '0 0 0 0 rgba(0, 201, 255, 0.1)',
+                    '0 0 0 10px rgba(0, 201, 255, 0)',
+                  ],
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                }}
+              />
+            )}
           </motion.a>
         </motion.div>
       </div>
