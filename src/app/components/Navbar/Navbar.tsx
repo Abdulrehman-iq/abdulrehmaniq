@@ -3,14 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { FaGithub, FaLinkedin, FaWhatsapp, FaDatabase } from 'react-icons/fa';
-import { SiPython, SiApachespark, SiApacheairflow, SiDocker, SiPostgresql, SiSnowflake } from 'react-icons/si';
+import { SiPython, SiApachespark, SiApacheairflow, SiDocker,  } from 'react-icons/si';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import SplitType from 'split-type';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
   const logoCharsRef = useRef<HTMLSpanElement[]>([]);
   const [isAnimated, setIsAnimated] = useState(false);
@@ -53,12 +53,12 @@ export default function Navbar() {
           const randomColor = colors[Math.floor(Math.random() * colors.length)];
           
           gsap.to(char, { 
-            y: -12, 
-            scale: 1.4, 
+            y: -15, 
+            scale: 1.5, 
             color: randomColor, 
-            rotation: Math.random() * 10 - 5,
-            duration: 0.3,
-            ease: 'back.out(1.7)'
+            rotation: Math.random() * 15 - 7.5,
+            duration: 0.4,
+            ease: 'back.out(2)'
           });
         });
         
@@ -68,8 +68,8 @@ export default function Navbar() {
             scale: 1, 
             color: '#fffce1',
             rotation: 0,
-            duration: 0.5,
-            ease: 'power2.out'
+            duration: 0.6,
+            ease: 'elastic.out(1, 0.3)'
           });
         });
       });
@@ -84,13 +84,13 @@ export default function Navbar() {
     };
   }, [isAnimated]);
 
-  // Data Engineering tech icons that appear on logo hover
+  // Enhanced Data Engineering tech icons
   const dataEngineeringIcons = [
-    { icon: SiPython, color: "#3776ab", delay: 0, name: "Python" },
-    { icon: SiApachespark, color: "#e25a1c", delay: 0.1, name: "Apache Spark" },
-    { icon: SiApacheairflow, color: "#017cee", delay: 0.2, name: "Apache Airflow" },
-    { icon: FaDatabase, color: "#336791", delay: 0.3, name: "Databases" },
-    { icon: SiDocker, color: "#2496ed", delay: 0.5, name: "Docker" }
+    { icon: SiPython, color: "#3776ab", delay: 0, name: "Python", desc: "Data Processing" },
+    { icon: SiApachespark, color: "#e25a1c", delay: 0.1, name: "Apache Spark", desc: "Big Data" },
+    { icon: SiApacheairflow, color: "#017cee", delay: 0.2, name: "Apache Airflow", desc: "Orchestration" },
+    { icon: FaDatabase, color: "#336791", delay: 0.3, name: "Databases", desc: "Data Storage" },
+    { icon: SiDocker, color: "#2496ed", delay: 0.5, name: "Docker", desc: "Containerization" }
   ];
 
   const socialLinks = [
@@ -129,7 +129,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center">
           
           {/* Logo Section with Enhanced Hover Effects */}
-          <div className="relative group">
+          <div 
+            className="relative group"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             <Link href="/" className="block">
               <div 
                 ref={logoRef} 
@@ -140,107 +144,215 @@ export default function Navbar() {
               </div>
             </Link>
             
-            {/* Animated underline with enhanced gradient */}
+            {/* Enhanced animated underline */}
             <motion.div 
-              className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 via-green-400 to-blue-400 shadow-lg shadow-cyan-400/30"
-              initial={{ width: 0 }}
-              whileHover={{ width: '100%' }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-green-400 to-blue-400 shadow-lg shadow-cyan-400/50 rounded-full"
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ 
+                width: isHovered ? '100%' : 0,
+                opacity: isHovered ? 1 : 0
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             />
             
-            {/* Data Engineering Tech Stack Display */}
-            <div className="absolute -bottom-12 left-0 flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0 pointer-events-none">
-              {dataEngineeringIcons.map((tech, index) => (
-                <div
-                  key={index}
-                  className="relative cursor-pointer group/icon"
-                  title={tech.name}
-                  style={{
-                    opacity: 0,
-                    transform: 'translateY(20px) scale(0.5) rotate(-180deg)',
-                    animation: `techIconAppear 0.5s ease-out ${tech.delay}s forwards`
-                  }}
-                >
-                  <div 
-                    className="w-8 h-8 rounded-lg flex items-center justify-center backdrop-blur-sm border border-white/10 shadow-lg hover:scale-110 hover:-translate-y-1 transition-transform duration-200"
-                    style={{ backgroundColor: `${tech.color}15` }}
-                  >
-                    <tech.icon 
-                      style={{ color: tech.color }} 
-                      className="text-sm drop-shadow-lg"
-                    />
-                  </div>
-                  
-                  {/* Enhanced Tooltip */}
-                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 px-3 py-1.5 bg-gradient-to-r from-gray-900 to-black text-white text-xs rounded-lg opacity-0 group-hover/icon:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none border border-white/10 shadow-xl">
-                    {tech.name}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Glowing background effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-green-400/10 to-blue-400/10 rounded-lg blur-xl"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ 
+                opacity: isHovered ? 1 : 0,
+                scale: isHovered ? 1.1 : 0.8
+              }}
+              transition={{ duration: 0.4 }}
+            />
             
-            {/* Data Engineer Title with Animation */}
-            <motion.div 
-              className="absolute -bottom-8 left-0 text-xs font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-green-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-all duration-500"
-              initial={{ opacity: 0, y: 10 }}
-              whileHover={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <span className="flex items-center gap-2">
-                <FaDatabase className="text-cyan-400 text-xs animate-spin" style={{ animationDuration: '3s' }} />
-                Data Engineer
+            {/* Enhanced Data Engineering Tech Stack Display */}
+            <AnimatePresence>
+              {isHovered && (
                 <motion.div 
-                  className="w-1 h-1 bg-green-400 rounded-full"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </span>
-            </motion.div>
+                  className="absolute -bottom-16 left-0 flex flex-wrap gap-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  {dataEngineeringIcons.map((tech, index) => (
+                    <motion.div
+                      key={index}
+                      className="relative group/icon cursor-pointer"
+                      initial={{ 
+                        opacity: 0, 
+                        y: 30, 
+                        scale: 0.3,
+                        rotate: -180
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        y: 0, 
+                        scale: 1,
+                        rotate: 0
+                      }}
+                      transition={{ 
+                        duration: 0.6, 
+                        delay: tech.delay,
+                        ease: "back.out(1.7)",
+                        type: "spring",
+                        stiffness: 200
+                      }}
+                      whileHover={{ 
+                        scale: 1.3, 
+                        y: -8,
+                        rotate: [0, -10, 10, 0],
+                        transition: { 
+                          duration: 0.4,
+                          rotate: { duration: 0.6, ease: "easeInOut" }
+                        }
+                      }}
+                    >
+                      {/* Icon container with enhanced styling */}
+                      <div 
+                        className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-md border border-white/20 shadow-2xl relative overflow-hidden"
+                        style={{ 
+                          backgroundColor: `${tech.color}20`,
+                          boxShadow: `0 8px 32px ${tech.color}30, inset 0 1px 0 rgba(255,255,255,0.1)`
+                        }}
+                      >
+                        {/* Animated background gradient */}
+                        <motion.div
+                          className="absolute inset-0 opacity-0 group-hover/icon:opacity-100"
+                          style={{
+                            background: `linear-gradient(135deg, ${tech.color}40, ${tech.color}10)`
+                          }}
+                          transition={{ duration: 0.3 }}
+                        />
+                        
+                        <tech.icon 
+                          style={{ color: tech.color }} 
+                          className="text-lg drop-shadow-lg relative z-10"
+                        />
+                        
+                        {/* Floating particles effect */}
+                        <motion.div
+                          className="absolute inset-0 pointer-events-none"
+                          animate={{
+                            background: [
+                              `radial-gradient(circle at 20% 80%, ${tech.color}30 0%, transparent 50%)`,
+                              `radial-gradient(circle at 80% 20%, ${tech.color}30 0%, transparent 50%)`,
+                              `radial-gradient(circle at 40% 40%, ${tech.color}30 0%, transparent 50%)`
+                            ]
+                          }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        />
+                      </div>
+                      
+                      {/* Enhanced Tooltip with description */}
+                      <motion.div 
+                        className="absolute -top-16 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white text-xs rounded-xl opacity-0 group-hover/icon:opacity-100 whitespace-nowrap pointer-events-none border border-white/20 shadow-2xl backdrop-blur-sm"
+                        initial={{ y: 10, opacity: 0 }}
+                        whileHover={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                        style={{
+                          boxShadow: `0 10px 40px ${tech.color}20`
+                        }}
+                      >
+                        <div className="font-semibold text-[#fffce1]">{tech.name}</div>
+                        <div className="text-xs text-gray-300 mt-1">{tech.desc}</div>
+                        
+                        {/* Tooltip arrow */}
+                        <div 
+                          className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"
+                        />
+                        
+                        {/* Glowing effect */}
+                        <motion.div
+                          className="absolute inset-0 rounded-xl opacity-20"
+                          style={{ backgroundColor: tech.color }}
+                          animate={{ opacity: [0.1, 0.3, 0.1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
+            {/* Enhanced Data Engineer Title */}
+            <AnimatePresence>
+              {isHovered && (
+                <motion.div 
+                  className="absolute -bottom-9 left-0 flex items-center gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                >
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  >
+                    <FaDatabase className="text-cyan-400 text-sm drop-shadow-lg" />
+                  </motion.div>
+                  
+                  <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-green-400 to-blue-400">
+                    Data Engineer
+                  </span>
+                  
+                  <motion.div 
+                    className="w-2 h-2 bg-green-400 rounded-full shadow-lg shadow-green-400/50"
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.6, 1, 0.6]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center space-x-3">
+          {/* Enhanced Social Links */}
+          <div className="flex items-center space-x-4">
             {socialLinks.map((social, index) => (
               <motion.a
                 key={index}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative w-10 h-10 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:border-white/20 transition-all duration-300 group overflow-hidden"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
+                className="relative w-11 h-11 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:border-white/30 transition-all duration-300 group overflow-hidden"
+                whileHover={{ 
+                  scale: 1.15, 
+                  rotate: 8,
+                  boxShadow: `0 10px 30px ${social.color}30`
+                }}
+                whileTap={{ scale: 0.9 }}
                 title={social.name}
               >
+                <motion.div
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100"
+                  style={{
+                    background: `linear-gradient(135deg, ${social.color}20, ${social.color}05)`
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+                
                 <social.icon 
-                  className="text-lg transition-colors duration-300" 
+                  className="text-xl transition-all duration-300 relative z-10 group-hover:drop-shadow-lg" 
                   style={{ color: social.color }}
                 />
                 
-                {/* Hover overlay */}
-                <div 
-                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-                  style={{ backgroundColor: social.color }}
+                {/* Pulsing ring effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-xl border-2 opacity-0 group-hover:opacity-100"
+                  style={{ borderColor: social.color }}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 />
               </motion.a>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Custom CSS for tech icon animations */}
-      <style jsx>{`
-        @keyframes techIconAppear {
-          0% {
-            opacity: 0;
-            transform: translateY(20px) scale(0.5) rotate(-180deg);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1) rotate(0deg);
-          }
-        }
-      `}</style>
     </motion.header>
   );
 }
