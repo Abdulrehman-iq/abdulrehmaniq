@@ -186,6 +186,7 @@ export default function Hero() {
                   style={{ backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d)' }}
                 />
                 <span className="text-[#fffce1]">Building Scalable Pipelines & Cloud Architectures</span>
+              
               </span>
             </motion.div>
             
