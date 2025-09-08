@@ -273,24 +273,28 @@ I build smart data systems that turn raw data into clear business insights. My w
               className="flex flex-col items-center mt-8"
             >
               <motion.a 
-                href="#projects"
-                onClick={handleExploreClick}
-                className="px-6 py-3 font-medium rounded-xl text-[#fffce1] transition-all duration-300"
-                style={{
-                  border: '2px solid transparent',
-                  backgroundImage: 'linear-gradient(#0d0d0d, #0d0d0d), linear-gradient(90deg, #00c9ff, #92fe9d)',
-                  backgroundOrigin: 'border-box',
-                  backgroundClip: 'padding-box, border-box',
-                  boxShadow: '0 0 20px rgba(0, 201, 255, 0.2)'
-                }}
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 0 25px rgba(0, 201, 255, 0.4)'
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Explore Data Projects
-              </motion.a>
+  href="#projects"
+  onClick={handleExploreClick}
+  className="group relative px-8 py-4 text-lg font-semibold rounded-2xl text-[#fffce1] transition-all duration-300 overflow-hidden"
+  style={{
+    border: '2px solid transparent',
+    backgroundImage: 'linear-gradient(#0d0d0d, #0d0d0d), linear-gradient(135deg, #00c9ff, #92fe9d, #60a5fa)',
+    backgroundOrigin: 'border-box',
+    backgroundClip: 'padding-box, border-box',
+    boxShadow: '0 10px 30px rgba(0, 201, 255, 0.3)'
+  }}
+  whileHover={{ 
+    scale: 1.05,
+    boxShadow: '0 15px 40px rgba(0, 201, 255, 0.4)'
+  }}
+  whileTap={{ scale: 0.98 }}
+>
+  <span className="relative z-10">Explore Data Projects</span>
+  {/* Animated background on hover */}
+  <motion.div
+    className="absolute inset-0 bg-gradient-to-r from-[#00c9ff]/10 to-[#92fe9d]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+  />
+</motion.a>
               
               {/* Animated down chevron */}
               <motion.div 
