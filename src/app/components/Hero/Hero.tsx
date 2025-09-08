@@ -175,20 +175,28 @@ export default function Hero() {
           <div className="text-center max-w-4xl mx-auto">
             {/* Decorative element */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, type: "spring" }}
-              className="mb-6 inline-flex"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-m font-medium font-dm-sans bg-white/5 backdrop-blur-md border border-white/10">
-                <HiOutlineSparkles 
-                  className="text-transparent bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d)' }}
-                />
-                <span className="text-[#fffce1]">Building Scalable Pipelines & Cloud Architectures</span>
-              
-              </span>
-            </motion.div>
+  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+  animate={{ opacity: 1, scale: 1, y: 0 }}
+  transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+  className="mb-12 inline-flex"
+>
+  <div className="relative">
+    <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full text-sm font-medium font-dm-sans bg-white/8 backdrop-blur-xl border border-white/15 shadow-2xl">
+      <motion.div
+        animate={{ rotate: [0, 360] }}
+        transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+      >
+        <HiOutlineSparkles 
+          className="text-lg"
+          style={{ color: '#00c9ff' }}
+        />
+      </motion.div>
+      <span className="text-[#fffce1] font-medium">Building Scalable Pipelines & Cloud Architectures</span>
+    </span>
+    {/* Glow effect */}
+    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00c9ff]/20 to-[#92fe9d]/20 blur-xl -z-10" />
+  </div>
+</motion.div>
             
             {/* Headline wrapper for scroll effects */}
             <div ref={titleWrapperRef} className="perspective-1000">
@@ -201,12 +209,19 @@ export default function Hero() {
                 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight text-[#fffce1] font-outfit tracking-tight"
               >
                 Transforming Data Into  {' '}
-                <span 
-                  className="text-[#fffcel] bg-clip-text"
-                  style={{ backgroundImage: 'linear-gradient(90deg, #00c9ff, #92fe9d)' }}
-                >
-                  Insights
-                </span>
+                 <span 
+    className="relative inline-block"
+  >
+    <span
+      className="bg-clip-text text-transparent bg-gradient-to-r from-[#00c9ff] via-[#92fe9d] to-[#60a5fa]"
+      style={{ 
+        backgroundSize: '200% 200%',
+        animation: 'gradient-shift 4s ease-in-out infinite'
+      }}
+    >
+      Insights
+    </span>
+  </span>
               </motion.h1>
             </div>
             
@@ -246,7 +261,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.6 }}
               className="text-xl leading-relaxed max-w-2xl mx-auto mb-10 text-[#fffce1] font-dm-sans"
             >
-              I design and automate robust data workflows that turn raw data into business-ready insights. From real-time processing and batch pipelines to cloud-native ETL and analytics dashboards—my work powers data-driven decisions at scale.
+I build smart data systems that turn raw data into clear business insights. My work includes real-time processing, automated pipelines, and analytics dashboards that help businesses make better decisions.
             </motion.p>
             
             {/* Enhanced CTA button with downward orientation */}
